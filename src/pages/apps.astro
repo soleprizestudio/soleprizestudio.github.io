@@ -1,15 +1,13 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
 import Features from '~/components/widgets/Features.astro';
 
 const metadata = { title: '앱' };
 ---
 
 <Layout metadata={metadata}>
-  <section class="px-4 pt-16 sm:px-6 mx-auto lg:px-8 lg:pt-20 max-w-6xl">
-    <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter mb-4">앱</h1>
-    <p class="text-muted mb-4">SolePrize Studio가 만드는 앱을 소개합니다.</p>
-  </section>
+  <HeroText tagline="Apps" title="앱" subtitle="SolePrize Studio가 만드는 앱을 소개합니다." />
 
   <Features
     columns={2}
