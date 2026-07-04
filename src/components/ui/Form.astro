@@ -11,11 +11,17 @@ const {
   action,
   method = 'POST',
   hiddenFields,
+  honeypot = false,
 } = Astro.props;
 ---
 
 <form action={action} method={method}>
   {hiddenFields && hiddenFields.map(({ name, value }) => <input type="hidden" name={name} value={value} />)}
+  {
+    honeypot && (
+      <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" autocomplete="off" />
+    )
+  }
 
   {
     inputs &&

@@ -189,6 +189,7 @@ export interface Form {
   action?: string;
   method?: string;
   hiddenFields?: Array<{ name: string; value: string }>;
+  honeypot?: boolean;
 }
 
 // WIDGETS

@@ -39,6 +39,7 @@ const sent = Astro.url.searchParams.get('sent') === '1';
       { name: 'subject', value: 'SolePrize Studio 웹사이트 문의' },
       { name: 'redirect', value: `${getPermalink('/contact')}?sent=1` },
     ]}
+    honeypot={true}
     inputs={[
       { type: 'text', name: 'name', label: '이름' },
       { type: 'email', name: 'email', label: '이메일' },
