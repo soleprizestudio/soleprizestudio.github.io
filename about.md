@@ -1,7 +1,11 @@
 ---
 layout: page
-title: About
-subtitle: The studio behind the apps and games
+title: "About"
+subheadline: "The studio behind the apps and games"
+permalink: "/about/"
+header:
+  title: "About"
+  background-color: "#16324f"
 ---
 
 ## SolePrize Studio
@@ -16,7 +20,7 @@ subtitle: The studio behind the apps and games
 
 ### Games
 
-Check out our playable web builds on the [Games page]({{ '/games' | relative_url }}).
+Check out our playable web builds on the [Games page](/games/).
 
 ### Contact
 

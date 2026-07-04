@@ -1,25 +1,14 @@
 ---
-layout: base
+layout: page
 ---
+<div class="game-embed" style="margin: 1.5rem 0;">
+  <iframe
+    src="{{ page.play_path | relative_url }}"
+    style="width: 100%; height: 600px; border: 1px solid #ddd; border-radius: 4px;"
+    allowfullscreen>
+  </iframe>
+</div>
 
-{% include header.html type="page" %}
+{{ content }}
 
-<main class="container-md">
-  <div class="row">
-    <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
-
-      {{ content }}
-
-      <div class="game-embed" style="margin: 2rem 0;">
-        <iframe
-          src="{{ page.play_path | relative_url }}"
-          style="width: 100%; height: 600px; border: 1px solid #ddd; border-radius: 4px;"
-          allowfullscreen>
-        </iframe>
-      </div>
-
-      <p><a href="{{ '/games' | relative_url }}">&larr; Back to all games</a></p>
-
-    </div>
-  </div>
-</main>
+<p><a href="{{ '/games/' | relative_url }}">&larr; Back to all games</a></p>

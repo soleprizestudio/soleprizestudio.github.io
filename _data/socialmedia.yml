@@ -1,0 +1,9 @@
+- name: GitHub
+  url: https://github.com/soleprizestudio
+  class: icon-github
+  title: "SolePrize Studio on GitHub"
+
+- name: Email
+  url: mailto:soleprizestudio@gmail.com
+  class: icon-mail
+  title: "Email SolePrize Studio"

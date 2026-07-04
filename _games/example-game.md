@@ -1,7 +1,7 @@
 ---
 layout: game
 title: Example Game
-summary: A placeholder entry showing how a game page works. Replace this with your first real build.
+teaser: A placeholder entry showing how a game page works. Replace this with your first real build.
 play_path: /play/example-game/
 ---
 
@@ -14,7 +14,7 @@ the raw web build living under `/play/example-game/`.
 1. Export your web build (e.g. Unity WebGL with **Compression Format set to
    "Disabled"** — GitHub Pages can't serve the default gzip/brotli compressed
    build files) into `/play/<your-game-slug>/`.
-2. Copy this file to `_games/<your-game-slug>.md` and update `title`, `summary`,
+2. Copy this file to `_games/<your-game-slug>.md` and update `title`, `teaser`,
    and `play_path` to match.
 3. Optionally add a `thumbnail: /assets/img/<your-image>.png` field for the
    games listing page.
