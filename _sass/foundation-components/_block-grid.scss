@@ -46,7 +46,7 @@ $block-grid-media-queries: true !default;
     }
 
     @else {
-      margin: 0 calc(-1 * $spacing / 2);
+      margin: 0 (-1 * $spacing / 2);
     }
 
     @include clearfix;
@@ -57,14 +57,14 @@ $block-grid-media-queries: true !default;
       float: $default-float;
 
       @if $include-spacing {
-        padding: 0 calc($spacing / 2) $spacing;
+        padding: 0 ($spacing / 2) $spacing;
       }
     }
   }
 
   @if $per-row {
     &>li {
-      width: calc(100% / $per-row);
+      width: (100% / $per-row);
 
       @if $include-spacing {
         padding: 0 ($spacing/2) $spacing;
