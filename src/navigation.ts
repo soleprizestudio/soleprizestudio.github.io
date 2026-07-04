@@ -15,18 +15,12 @@ export const headerData = {
 // PageLayout.astro fills those in dynamically from the games/apps
 // collections (so the footer lists real games/apps as sub-links).
 export const footerData = {
-  links: [
-    {
-      title: '정책',
-      links: [
-        { text: '이용약관', href: getPermalink('/terms') },
-        { text: '개인정보처리방침', href: getPermalink('/privacy') },
-      ],
-    },
-  ],
+  links: [],
   secondaryLinks: [
     { text: '소개', href: getPermalink('/about') },
     { text: '문의', href: getPermalink('/contact') },
+    { text: '이용약관', href: getPermalink('/terms') },
+    { text: '개인정보처리방침', href: getPermalink('/privacy') },
   ],
   socialLinks: [
     { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/soleprizestudio' },
