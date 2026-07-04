@@ -8,25 +8,25 @@ layout: frontpage
 header:
   title: "SolePrize Studio"
   background-color: "#16324f"
-  caption: "Apps, games, and web experiments — built in the open."
+  caption: "앱, 게임, 그리고 웹 실험들 — 만드는 과정을 그대로 공개합니다."
 widget1:
-  title: "Games"
+  title: "게임"
   url: '/games/'
-  text: 'Playable web-build prototypes and games, right in your browser.'
+  text: '브라우저에서 바로 플레이할 수 있는 웹 게임 프로토타입들.'
 widget2:
-  title: "Blog"
+  title: "블로그"
   url: '/blog/'
-  text: 'Devlogs, updates, and notes from the studio.'
+  text: '스튜디오의 개발기와 소식을 전해드립니다.'
 widget3:
-  title: "About"
+  title: "소개"
   url: '/about/'
-  text: "Who we are and what we&#39;re building."
+  text: "저희가 누구고, 무엇을 만들고 있는지."
 #
 # Use the call for action to show a button on the frontpage
 #
 callforaction:
   url: /about/
-  text: Learn more about the studio ›
+  text: 스튜디오 더 알아보기 ›
   style: alert
 permalink: /index.html
 #

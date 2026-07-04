@@ -11,13 +11,13 @@
 title: 'SolePrize Studio'
 
 # The slogan describes your website and is used on homepage in <title> and other important places
-slogan: 'Apps, games, and web experiments'
+slogan: '앱, 게임, 그리고 웹 실험들'
 
 # The description is used on homepage and in the footer to quickly describe your website. Use a maximum of 150 characters for SEO-purposes.
-description: 'SolePrize Studio - brand updates, blog posts, and playable web game prototypes.'
+description: 'SolePrize Studio - 브랜드 소식, 블로그 글, 그리고 플레이 가능한 웹 게임 프로토타입.'
 
 # The credits show up in the includes/_footer.html – It would be nice of you to leave a link to Phlow or Feeling Responsive as a thank you :)
-credits: '<p>Built with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> on the <a href="http://phlow.github.io/feeling-responsive/">Feeling Responsive</a> theme.</p>'
+credits: '<p><a href="http://jekyllrb.com/" target="_blank">Jekyll</a>과 <a href="http://phlow.github.io/feeling-responsive/">Feeling Responsive</a> 테마로 만들었습니다.</p>'
 
 # Main author of the website
 # See > authors.yml
@@ -80,7 +80,7 @@ exclude:
 
 
 # The language setting is used in /includes/header.html for html-settings
-language: 'en'
+language: 'ko'
 
 
 # Used › default.html front-matter and compress.html
@@ -184,7 +184,7 @@ msapplication_tilecolor              : '#fabb00'
 #   /_/    \__,_/\___/\___/_.___/\____/\____/_/|_|      Facebook-Optimization › http://j.mp/fb_optimize
 
 # og_image                            : ''
-og_locale                            : 'en_EN'
+og_locale                            : 'ko_KR'
 og_type                              : 'website'
 
 

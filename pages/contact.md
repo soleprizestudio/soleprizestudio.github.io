@@ -1,8 +1,8 @@
 ---
 layout              : page
-title               : "Contact"
-subheadline         : "Get in touch"
-teaser              : "Questions, feedback, or just want to say hi?"
+title               : "문의"
+subheadline         : "연락해주세요"
+teaser              : "질문, 피드백, 아니면 그냥 인사도 좋아요."
 permalink           : "/contact/"
 ---
-Reach us at [soleprizestudio@gmail.com](mailto:soleprizestudio@gmail.com) or on [GitHub](https://github.com/soleprizestudio).
+[soleprizestudio@gmail.com](mailto:soleprizestudio@gmail.com) 또는 [GitHub](https://github.com/soleprizestudio)로 연락주세요.

@@ -1,16 +1,16 @@
-- menu_name: "Dankeschön"
+- menu_name: "고마운 도구들"
 
-- name: "Icons by Daniel Bruce"
+- name: "아이콘 by Daniel Bruce"
   url: "http://entypo.com/"
   class: "network-entypo"
-  title: "Icons by Daniel Bruce"
+  title: "아이콘 by Daniel Bruce"
 
-- name: "Built on Foundation"
+- name: "Foundation으로 제작"
   url: "http://foundation.zurb.com/"
   class: "services-newsletter"
-  title: "Built on Foundation"
+  title: "Foundation으로 제작"
 
-- name: "Using Backstretch by Scott Robbin"
+- name: "Backstretch by Scott Robbin 사용"
   url: "http://srobbin.com/jquery-plugins/backstretch/"
   class: "sitemap-link"
-  title: "Using Backstretch by Scott Robbin"
+  title: "Backstretch by Scott Robbin 사용"

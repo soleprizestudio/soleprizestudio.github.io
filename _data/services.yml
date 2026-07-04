@@ -1,17 +1,17 @@
-- menu_name: "Services"
+- menu_name: "바로가기"
 
-- name: "Contact"
+- name: "문의"
   url: "/contact/"
-  title: "Contact"
+  title: "문의"
 
 - name: "RSS"
   url: "/feed.xml"
-  title: "Subscribe to RSS Feed"
+  title: "RSS 피드 구독"
 
 - name: "Atom"
   url: "/atom.xml"
-  title: "Subscribe to Atom Feed"
+  title: "Atom 피드 구독"
 
 - name: "sitemap.xml"
   url: "/sitemap.xml"
-  title: "Sitemap for Google Webmaster Tools"
+  title: "구글 웹마스터용 사이트맵"

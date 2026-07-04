@@ -1,26 +1,26 @@
-- title: Home
+- title: 홈
   url: "/"
   side: left
 
-- title: Games
+- title: 게임
   url: "/games/"
   side: left
 
-- title: Blog
+- title: 블로그
   url: "/blog/"
   side: left
   dropdown:
-  - title: "Blog Archive"
+  - title: "블로그 아카이브"
     url: "/blog/archive/"
 
-- title: About
+- title: 소개
   url: "/about/"
   side: left
 
-- title: "Search"
+- title: "검색"
   url: "/search/"
   side: right
 
-- title: "Contact"
+- title: "문의"
   url: "/contact/"
   side: right
