@@ -12,7 +12,17 @@ export const headerData = {
 };
 
 export const footerData = {
-  links: [],
+  links: [
+    {
+      title: '메뉴',
+      links: [
+        { text: '게임', href: getPermalink('/games') },
+        { text: '앱', href: getPermalink('/apps') },
+        { text: '소개', href: getPermalink('/about') },
+        { text: '문의', href: getPermalink('/contact') },
+      ],
+    },
+  ],
   secondaryLinks: [
     { text: '이용약관', href: getPermalink('/terms') },
     { text: '개인정보처리방침', href: getPermalink('/privacy') },
