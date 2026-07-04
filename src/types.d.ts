@@ -186,6 +186,9 @@ export interface Form {
   disclaimer?: Disclaimer;
   button?: string;
   description?: string;
+  action?: string;
+  method?: string;
+  hiddenFields?: Array<{ name: string; value: string }>;
 }
 
 // WIDGETS

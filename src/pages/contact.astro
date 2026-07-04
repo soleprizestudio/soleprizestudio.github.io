@@ -2,19 +2,43 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
+import { getPermalink } from '~/utils/permalinks';
 
 const metadata = {
   title: '문의',
 };
+
+// Web3Forms(https://web3forms.com)로 폼을 연결합니다.
+// 1. web3forms.com에서 이메일로 access key를 받아서
+// 2. 아래 WEB3FORMS_ACCESS_KEY 값을 교체해주세요. (공개돼도 안전한 키입니다)
+const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+
+const sent = Astro.url.searchParams.get('sent') === '1';
 ---
 
 <Layout metadata={metadata}>
   <HeroText tagline="Contact" title="문의하기" />
 
+  {
+    sent && (
+      <div class="max-w-xl mx-auto mb-6 px-4">
+        <div class="rounded-lg border border-green-300 bg-green-50 dark:bg-green-900/30 dark:border-green-700 text-green-800 dark:text-green-200 p-4 text-center">
+          문의가 정상적으로 접수되었습니다. 빠른 시일 내에 답변드릴게요!
+        </div>
+      </div>
+    )
+  }
+
   <ContactUs
     id="form"
     title="메시지를 남겨주세요"
     subtitle="이메일로도 연락 가능합니다: soleprizestudio@gmail.com"
+    action="https://api.web3forms.com/submit"
+    hiddenFields={[
+      { name: 'access_key', value: WEB3FORMS_ACCESS_KEY },
+      { name: 'subject', value: 'SolePrize Studio 웹사이트 문의' },
+      { name: 'redirect', value: `${getPermalink('/contact')}?sent=1` },
+    ]}
     inputs={[
       { type: 'text', name: 'name', label: '이름' },
       { type: 'email', name: 'email', label: '이메일' },
