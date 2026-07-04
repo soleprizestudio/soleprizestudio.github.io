@@ -76,7 +76,18 @@ const gamesCollection = defineCollection({
   }),
 });
 
+const appsCollection = defineCollection({
+  loader: glob({ pattern: '*.md', base: 'src/data/apps' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    icon: z.string().optional(),
+    storeUrl: z.string().optional(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   games: gamesCollection,
+  apps: appsCollection,
 };

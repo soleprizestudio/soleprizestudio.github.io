@@ -11,17 +11,11 @@ export const headerData = {
   actions: [],
 };
 
+// footerData.links is intentionally left without 게임/앱 —
+// PageLayout.astro fills those in dynamically from the games/apps
+// collections (so the footer lists real games/apps as sub-links).
 export const footerData = {
   links: [
-    {
-      title: '메뉴',
-      links: [
-        { text: '게임', href: getPermalink('/games') },
-        { text: '앱', href: getPermalink('/apps') },
-        { text: '소개', href: getPermalink('/about') },
-        { text: '문의', href: getPermalink('/contact') },
-      ],
-    },
     {
       title: '정책',
       links: [
@@ -30,7 +24,10 @@ export const footerData = {
       ],
     },
   ],
-  secondaryLinks: [],
+  secondaryLinks: [
+    { text: '소개', href: getPermalink('/about') },
+    { text: '문의', href: getPermalink('/contact') },
+  ],
   socialLinks: [
     { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/soleprizestudio' },
     { ariaLabel: 'Email', icon: 'tabler:mail', href: 'mailto:soleprizestudio@gmail.com' },

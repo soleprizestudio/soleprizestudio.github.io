@@ -2,6 +2,9 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import Features from '~/components/widgets/Features.astro';
+import { getCollection } from 'astro:content';
+
+const apps = await getCollection('apps');
 
 const metadata = { title: '앱' };
 ---
@@ -11,16 +14,16 @@ const metadata = { title: '앱' };
 
   <Features
     columns={2}
-    items={[
-      {
-        title: '앱 이름',
-        description: '짧은 설명이 여기 들어갑니다. 실제 앱 정보로 교체해주세요.',
-        icon: 'tabler:apps',
-        callToAction: {
-          text: '스토어에서 보기',
-          href: '#',
-        },
-      },
-    ]}
+    items={apps.map((app) => ({
+      title: app.data.title,
+      description: app.data.description,
+      icon: app.data.icon || 'tabler:apps',
+      callToAction: app.data.storeUrl
+        ? {
+            text: '스토어에서 보기',
+            href: app.data.storeUrl,
+          }
+        : undefined,
+    }))}
   />
 </Layout>

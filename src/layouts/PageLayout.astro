@@ -2,8 +2,10 @@
 import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/widgets/Header.astro';
 import Footer from '~/components/widgets/Footer.astro';
+import { getCollection } from 'astro:content';
 
 import { headerData, footerData } from '~/navigation';
+import { getPermalink } from '~/utils/permalinks';
 
 import type { MetaData } from '~/types';
 
@@ -12,6 +14,27 @@ export interface Props {
 }
 
 const { metadata } = Astro.props;
+
+const games = await getCollection('games');
+const apps = await getCollection('apps');
+
+const footerLinks = [
+  {
+    title: '게임',
+    links: [
+      { text: '전체보기', href: getPermalink('/games') },
+      ...games.map((game) => ({ text: game.data.title, href: getPermalink(`/games/${game.id}`) })),
+    ],
+  },
+  {
+    title: '앱',
+    links: [
+      { text: '전체보기', href: getPermalink('/apps') },
+      ...apps.map((app) => ({ text: app.data.title, href: app.data.storeUrl || getPermalink('/apps') })),
+    ],
+  },
+  ...footerData.links,
+];
 ---
 
 <Layout metadata={metadata}>
@@ -22,6 +45,6 @@ const { metadata } = Astro.props;
     <slot />
   </main>
   <slot name="footer">
-    <Footer {...footerData} />
+    <Footer {...footerData} links={footerLinks} />
   </slot>
 </Layout>
