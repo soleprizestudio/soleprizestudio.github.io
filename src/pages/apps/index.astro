@@ -3,6 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import Features from '~/components/widgets/Features.astro';
 import { getCollection } from 'astro:content';
+import { getPermalink } from '~/utils/permalinks';
 
 const apps = await getCollection('apps');
 
@@ -18,12 +19,10 @@ const metadata = { title: '앱' };
       title: app.data.title,
       description: app.data.description,
       icon: app.data.icon || 'tabler:apps',
-      callToAction: app.data.storeUrl
-        ? {
-            text: '스토어에서 보기',
-            href: app.data.storeUrl,
-          }
-        : undefined,
+      callToAction: {
+        text: '자세히 보기',
+        href: getPermalink(`/apps/${app.id}`),
+      },
     }))}
   />
 </Layout>

@@ -30,7 +30,7 @@ const footerLinks = [
     title: '앱',
     links: [
       { text: '전체보기', href: getPermalink('/apps') },
-      ...apps.map((app) => ({ text: app.data.title, href: app.data.storeUrl || getPermalink('/apps') })),
+      ...apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
     ],
   },
   ...footerData.links,
