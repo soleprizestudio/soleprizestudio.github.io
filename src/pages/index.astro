@@ -1,0 +1,55 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getPermalink } from '~/utils/permalinks';
+
+const metadata = {
+  title: 'SolePrize Studio',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    actions={[
+      { variant: 'primary', text: '게임 보러가기', href: getPermalink('/games') },
+      { text: '앱 보러가기', href: getPermalink('/apps') },
+    ]}
+  >
+    <Fragment slot="title">SolePrize Studio</Fragment>
+    <Fragment slot="subtitle">앱과 게임을 만드는 스튜디오입니다.</Fragment>
+  </Hero>
+
+  <Features2
+    title="무엇을 만드나요"
+    tagline="Studio"
+    columns={3}
+    items={[
+      {
+        title: '게임',
+        description: '브라우저에서 바로 플레이할 수 있는 웹 게임 프로토타입을 만듭니다.',
+        icon: 'tabler:device-gamepad-2',
+        callToAction: { text: '게임 보기', href: getPermalink('/games') },
+      },
+      {
+        title: '앱',
+        description: '유용하고 재미있는 앱을 만듭니다.',
+        icon: 'tabler:apps',
+        callToAction: { text: '앱 보기', href: getPermalink('/apps') },
+      },
+      {
+        title: '소개',
+        description: '스튜디오에 대해 더 알아보세요.',
+        icon: 'tabler:info-circle',
+        callToAction: { text: '소개 보기', href: getPermalink('/about') },
+      },
+    ]}
+  />
+
+  <CallToAction actions={[{ variant: 'primary', text: '문의하기', href: getPermalink('/contact') }]}>
+    <Fragment slot="title">궁금한 점이 있으신가요?</Fragment>
+    <Fragment slot="subtitle">언제든지 편하게 연락주세요.</Fragment>
+  </CallToAction>
+</Layout>

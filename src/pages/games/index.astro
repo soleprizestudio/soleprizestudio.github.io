@@ -1,0 +1,32 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+import { getPermalink } from '~/utils/permalinks';
+
+const games = await getCollection('games');
+
+const metadata = { title: '게임' };
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-6xl">
+    <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter mb-4">게임</h1>
+    <p class="text-muted mb-12">브라우저에서 바로 플레이할 수 있는 웹 게임 프로토타입</p>
+
+    {games.length === 0 && <p>아직 등록된 게임이 없어요 — 곧 올라올 예정입니다!</p>}
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        games.map((game) => (
+          <a href={getPermalink(`/games/${game.id}`)} class="block group">
+            {game.data.thumbnail && (
+              <img src={game.data.thumbnail} alt={`${game.data.title} 썸네일`} class="w-full rounded-lg mb-3" />
+            )}
+            <h3 class="text-xl font-bold group-hover:text-primary">{game.data.title}</h3>
+            <p class="text-muted mt-2">{game.data.teaser}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

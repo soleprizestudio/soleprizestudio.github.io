@@ -1,0 +1,25 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import ContactUs from '~/components/widgets/Contact.astro';
+
+const metadata = {
+  title: '문의',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText tagline="Contact" title="문의하기" />
+
+  <ContactUs
+    id="form"
+    title="메시지를 남겨주세요"
+    subtitle="이메일로도 연락 가능합니다: soleprizestudio@gmail.com"
+    inputs={[
+      { type: 'text', name: 'name', label: '이름' },
+      { type: 'email', name: 'email', label: '이메일' },
+    ]}
+    textarea={{ label: '메시지' }}
+    disclaimer={{ label: '문의 폼을 제출하면 입력하신 개인정보 수집에 동의하게 됩니다.' }}
+  />
+</Layout>

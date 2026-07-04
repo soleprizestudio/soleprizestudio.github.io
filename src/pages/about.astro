@@ -1,0 +1,24 @@
+---
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: '소개',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero tagline="About">
+    <Fragment slot="title">소개</Fragment>
+    <Fragment slot="subtitle">앱과 게임을 만드는 스튜디오, SolePrize Studio입니다.</Fragment>
+  </Hero>
+
+  <Content
+    title="SolePrize Studio"
+    items={[
+      { title: '누구인가요', description: '실제 스튜디오 소개로 바꿔주세요 — 누구인지, 무엇을 만드는지, 왜 만드는지.' },
+      { title: '문의', description: 'soleprizestudio@gmail.com 으로 연락주세요.' },
+    ]}
+  />
+</Layout>

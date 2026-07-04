@@ -1,0 +1,9 @@
+---
+import { SITE } from 'astrowind:config';
+import Image from '~/components/common/Image.astro';
+
+// 여기에 실제 로고 파일을 넣어주세요: src/assets/images/logo.svg 를 교체하면 됩니다.
+// png/jpg를 쓰고 싶으면 파일명과 아래 src 경로의 확장자를 같이 바꿔주세요.
+---
+
+<Image src="~/assets/images/logo.svg" alt={SITE?.name} width={160} height={40} class="h-8 w-auto md:h-7" />

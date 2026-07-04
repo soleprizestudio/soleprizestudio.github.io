@@ -1,0 +1,31 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const games = await getCollection('games');
+  return games.map((game) => ({
+    params: { slug: game.id },
+    props: { game },
+  }));
+}
+
+const { game } = Astro.props;
+const { Content } = await render(game);
+
+const metadata = { title: game.data.title };
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
+    <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter mb-6">{game.data.title}</h1>
+
+    <div class="aspect-video w-full mb-8 border border-gray-200 dark:border-slate-600 rounded-lg overflow-hidden">
+      <iframe src={game.data.playPath} class="w-full h-full" title={game.data.title} loading="lazy" />
+    </div>
+
+    <div class="prose dark:prose-invert max-w-none">
+      <Content />
+    </div>
+  </section>
+</Layout>
