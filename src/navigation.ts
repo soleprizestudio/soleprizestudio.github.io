@@ -22,11 +22,15 @@ export const footerData = {
         { text: '문의', href: getPermalink('/contact') },
       ],
     },
+    {
+      title: '정책',
+      links: [
+        { text: '이용약관', href: getPermalink('/terms') },
+        { text: '개인정보처리방침', href: getPermalink('/privacy') },
+      ],
+    },
   ],
-  secondaryLinks: [
-    { text: '이용약관', href: getPermalink('/terms') },
-    { text: '개인정보처리방침', href: getPermalink('/privacy') },
-  ],
+  secondaryLinks: [],
   socialLinks: [
     { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/soleprizestudio' },
     { ariaLabel: 'Email', icon: 'tabler:mail', href: 'mailto:soleprizestudio@gmail.com' },
