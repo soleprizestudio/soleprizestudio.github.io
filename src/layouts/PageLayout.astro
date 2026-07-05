@@ -23,18 +23,12 @@ const headerLinks = [
   {
     text: '게임',
     href: getPermalink('/games'),
-    links: [
-      { text: '전체보기', href: getPermalink('/games') },
-      ...games.map((game) => ({ text: game.data.title, href: getPermalink(`/games/${game.id}`) })),
-    ],
+    links: games.map((game) => ({ text: game.data.title, href: getPermalink(`/games/${game.id}`) })),
   },
   {
     text: '앱',
     href: getPermalink('/apps'),
-    links: [
-      { text: '전체보기', href: getPermalink('/apps') },
-      ...apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
-    ],
+    links: apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
   },
   { text: '소개', href: getPermalink('/about') },
   { text: '문의', href: getPermalink('/contact') },
