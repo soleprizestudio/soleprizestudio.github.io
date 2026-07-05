@@ -18,6 +18,28 @@ const { metadata } = Astro.props;
 const games = await getCollection('games');
 const apps = await getCollection('apps');
 
+const headerLinks = [
+  { text: '홈', href: getPermalink('/') },
+  {
+    text: '게임',
+    href: getPermalink('/games'),
+    links: [
+      { text: '전체보기', href: getPermalink('/games') },
+      ...games.map((game) => ({ text: game.data.title, href: getPermalink(`/games/${game.id}`) })),
+    ],
+  },
+  {
+    text: '앱',
+    href: getPermalink('/apps'),
+    links: [
+      { text: '전체보기', href: getPermalink('/apps') },
+      ...apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
+    ],
+  },
+  { text: '소개', href: getPermalink('/about') },
+  { text: '문의', href: getPermalink('/contact') },
+];
+
 const footerLinks = [
   {
     title: '게임',
@@ -39,7 +61,7 @@ const footerLinks = [
 
 <Layout metadata={metadata}>
   <slot name="header">
-    <Header {...headerData} isSticky showToggleTheme />
+    <Header {...headerData} links={headerLinks} isSticky showToggleTheme />
   </slot>
   <main>
     <slot />

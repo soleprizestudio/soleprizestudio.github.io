@@ -1,5 +1,8 @@
 import { getPermalink } from './utils/permalinks';
 
+// headerData.links below is a fallback only — PageLayout.astro
+// overrides it with a version where 게임/앱 are dropdowns built from
+// the games/apps collections (전체보기 + one entry per real item).
 export const headerData = {
   links: [
     { text: '홈', href: getPermalink('/') },
