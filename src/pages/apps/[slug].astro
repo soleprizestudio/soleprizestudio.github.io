@@ -28,7 +28,7 @@ const metadata = { title: app.data.title };
     <p class="text-muted text-xl mb-8">{app.data.description}</p>
 
     {
-      app.data.storeUrl && app.data.storeUrl !== '#' && (
+      app.data.storeUrl && (
         <div class="mb-8">
           <Button variant="primary" href={app.data.storeUrl} text="App Store에서 보기" icon="tabler:brand-apple" />
         </div>
