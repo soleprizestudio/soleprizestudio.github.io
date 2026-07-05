@@ -37,17 +37,13 @@ const headerLinks = [
 const footerLinks = [
   {
     title: '게임',
-    links: [
-      { text: '전체보기', href: getPermalink('/games') },
-      ...games.map((game) => ({ text: game.data.title, href: getPermalink(`/games/${game.id}`) })),
-    ],
+    href: getPermalink('/games'),
+    links: games.map((game) => ({ text: game.data.title, href: getPermalink(`/games/${game.id}`) })),
   },
   {
     title: '앱',
-    links: [
-      { text: '전체보기', href: getPermalink('/apps') },
-      ...apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
-    ],
+    href: getPermalink('/apps'),
+    links: apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
   },
   ...footerData.links,
 ];
