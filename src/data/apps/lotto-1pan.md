@@ -3,6 +3,7 @@ title: 로또 1판
 description: 이번 주 로또 1등 당첨 판매점을 쉽고 빠르게 확인하는 앱입니다.
 icon: tabler:map-pin
 storeUrl: '#'
+privacyUrl: /apps/lotto-1pan/privacy
 ---
 
 이번 주 로또 1등은 어디에서 나왔을까요?

@@ -83,6 +83,7 @@ const appsCollection = defineCollection({
     description: z.string(),
     icon: z.string().optional(),
     storeUrl: z.string().optional(),
+    privacyUrl: z.string().optional(),
   }),
 });
 

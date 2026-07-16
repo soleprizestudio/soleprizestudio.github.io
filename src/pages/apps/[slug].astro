@@ -29,8 +29,13 @@ const metadata = { title: app.data.title };
 
     {
       app.data.storeUrl && (
-        <div class="mb-8">
+        <div class="mb-8 flex items-center gap-4 flex-wrap">
           <Button variant="primary" href={app.data.storeUrl} text="App Store에서 보기" icon="tabler:brand-apple" />
+          {app.data.privacyUrl && (
+            <a href={app.data.privacyUrl} class="text-muted hover:text-link hover:underline text-sm">
+              개인정보처리방침
+            </a>
+          )}
         </div>
       )
     }
