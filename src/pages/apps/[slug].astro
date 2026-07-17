@@ -27,9 +27,11 @@ const metadata = { title: app.data.title };
           <Image
             src={app.data.iconImage}
             alt={`${app.data.title} 아이콘`}
-            width={288}
-            height={288}
-            class="w-20 h-20 md:w-24 md:h-24 rounded-[22%] shadow-md"
+            width={96}
+            height={96}
+            densities={[1, 2, 3]}
+            layout="fixed"
+            class="rounded-[22%] shadow-md"
           />
         ) : (
           <Icon name={app.data.icon || 'tabler:apps'} class="w-12 h-12 text-primary" />
