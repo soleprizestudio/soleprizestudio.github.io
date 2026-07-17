@@ -2,7 +2,6 @@
 import Layout from '~/layouts/PageLayout.astro';
 import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
-import Button from '~/components/ui/Button.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -45,7 +44,24 @@ const metadata = { title: app.data.title };
     {
       app.data.storeUrl && (
         <div class="mb-8 flex items-center gap-4 flex-wrap">
-          <Button variant="primary" href={app.data.storeUrl} text="App Store에서 보기" icon="tabler:brand-apple" />
+          <a href={app.data.storeUrl} aria-label="App Store에서 다운로드">
+            <Image
+              src="~/assets/images/app-store-badge-black.svg"
+              alt="Download on the App Store"
+              width={144}
+              height={48}
+              layout="fixed"
+              class="dark:hidden"
+            />
+            <Image
+              src="~/assets/images/app-store-badge-white.svg"
+              alt="Download on the App Store"
+              width={144}
+              height={48}
+              layout="fixed"
+              class="hidden dark:block"
+            />
+          </a>
           {app.data.privacyUrl && (
             <a href={app.data.privacyUrl} class="text-muted hover:text-link hover:underline text-sm">
               개인정보처리방침
