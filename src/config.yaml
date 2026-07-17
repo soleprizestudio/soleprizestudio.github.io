@@ -15,6 +15,10 @@ metadata:
     follow: true
   openGraph:
     site_name: SolePrize Studio
+    images:
+      - url: '~/assets/images/default.png'
+        width: 1200
+        height: 630
     type: website
 
 i18n:
