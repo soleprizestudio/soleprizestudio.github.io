@@ -19,6 +19,7 @@ const metadata = { title: '앱' };
       title: app.data.title,
       description: app.data.description,
       icon: app.data.icon || 'tabler:apps',
+      image: app.data.iconImage ? { src: app.data.iconImage, alt: `${app.data.title} 아이콘` } : undefined,
       callToAction: {
         text: '자세히 보기',
         href: getPermalink(`/apps/${app.id}`),

@@ -1,6 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
 import Button from '~/components/ui/Button.astro';
 import { getCollection, render } from 'astro:content';
 
@@ -21,7 +22,19 @@ const metadata = { title: app.data.title };
 <Layout metadata={metadata}>
   <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
     <div class="flex items-center gap-4 mb-6">
-      <Icon name={app.data.icon || 'tabler:apps'} class="w-12 h-12 text-primary" />
+      {
+        app.data.iconImage ? (
+          <Image
+            src={app.data.iconImage}
+            alt={`${app.data.title} 아이콘`}
+            width={96}
+            height={96}
+            class="w-16 h-16 md:w-20 md:h-20 rounded-[22%] shadow-md"
+          />
+        ) : (
+          <Icon name={app.data.icon || 'tabler:apps'} class="w-12 h-12 text-primary" />
+        )
+      }
       <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter">{app.data.title}</h1>
     </div>
 

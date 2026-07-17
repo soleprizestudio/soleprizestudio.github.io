@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
 import Headline from '~/components/ui/Headline.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { Features as Props } from '~/types';
@@ -34,7 +35,7 @@ const columnsClass =
   {
     items.length > 0 && (
       <div class:list={['grid mx-auto gap-8 md:gap-y-12', columnsClass]}>
-        {items.map(({ title: itemTitle, description, icon, callToAction }) => {
+        {items.map(({ title: itemTitle, description, icon, image, callToAction }) => {
           const href = typeof callToAction === 'object' ? callToAction?.href : undefined;
           const Tag = href ? 'a' : 'div';
           return (
@@ -46,13 +47,25 @@ const columnsClass =
               ]}
             >
               <div class="flex flex-row max-w-md">
-                {(icon || defaultIcon) && (
+                {image ? (
                   <div class="flex justify-center">
-                    <Icon
-                      name={icon || defaultIcon}
-                      class="w-7 h-7 mr-2 rtl:mr-0 rtl:ml-2 text-white bg-primary rounded-full md:w-12 md:h-12 md:p-3 p-2 mr-4 rtl:ml-4 rtl:mr-0"
+                    <Image
+                      src={image.src}
+                      alt={image.alt ?? ''}
+                      width={56}
+                      height={56}
+                      class="w-10 h-10 md:w-14 md:h-14 rounded-[22%] mr-4 rtl:ml-4 rtl:mr-0"
                     />
                   </div>
+                ) : (
+                  (icon || defaultIcon) && (
+                    <div class="flex justify-center">
+                      <Icon
+                        name={icon || defaultIcon}
+                        class="w-7 h-7 mr-2 rtl:mr-0 rtl:ml-2 text-white bg-primary rounded-full md:w-12 md:h-12 md:p-3 p-2 mr-4 rtl:ml-4 rtl:mr-0"
+                      />
+                    </div>
+                  )
                 )}
                 <div class="mt-0.5">
                   {itemTitle && (
