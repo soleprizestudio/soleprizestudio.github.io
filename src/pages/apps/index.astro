@@ -5,7 +5,7 @@ import Features from '~/components/widgets/Features.astro';
 import { getCollection } from 'astro:content';
 import { getPermalink } from '~/utils/permalinks';
 
-const apps = await getCollection('apps');
+const apps = await getCollection('apps', ({ data }) => !data.draft);
 
 const metadata = { title: '앱' };
 ---

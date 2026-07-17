@@ -73,6 +73,7 @@ const gamesCollection = defineCollection({
     teaser: z.string(),
     playPath: z.string(),
     thumbnail: z.string().optional(),
+    draft: z.boolean().optional().default(false),
   }),
 });
 
@@ -84,6 +85,7 @@ const appsCollection = defineCollection({
     icon: z.string().optional(),
     storeUrl: z.string().optional(),
     privacyUrl: z.string().optional(),
+    draft: z.boolean().optional().default(false),
   }),
 });
 

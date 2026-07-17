@@ -15,8 +15,8 @@ export interface Props {
 
 const { metadata } = Astro.props;
 
-const games = await getCollection('games');
-const apps = await getCollection('apps');
+const games = await getCollection('games', ({ data }) => !data.draft);
+const apps = await getCollection('apps', ({ data }) => !data.draft);
 
 const headerLinks = [
   { text: '홈', href: getPermalink('/') },
