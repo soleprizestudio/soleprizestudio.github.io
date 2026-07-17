@@ -14,7 +14,7 @@ const metadata = { title: '앱' };
   <HeroText tagline="Apps" title="앱" subtitle="SolePrize Studio가 만드는 앱을 소개합니다." />
 
   <Features
-    columns={2}
+    columns={Math.min(2, apps.length)}
     items={apps.map((app) => ({
       title: app.data.title,
       description: app.data.description,
