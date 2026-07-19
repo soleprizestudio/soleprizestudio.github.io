@@ -8,6 +8,7 @@ export const headerData = {
     { text: '홈', href: getPermalink('/') },
     { text: '게임', href: getPermalink('/games') },
     { text: '앱', href: getPermalink('/apps') },
+    { text: '블로그', href: getPermalink('/blog') },
     { text: '소개', href: getPermalink('/about') },
     { text: '문의', href: getPermalink('/contact') },
   ],
@@ -23,6 +24,7 @@ export const footerData = {
       title: '스튜디오',
       links: [
         { text: '소개', href: getPermalink('/about') },
+        { text: '블로그', href: getPermalink('/blog') },
         { text: '문의', href: getPermalink('/contact') },
       ],
     },

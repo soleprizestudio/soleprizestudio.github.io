@@ -30,6 +30,7 @@ const headerLinks = [
     href: getPermalink('/apps'),
     links: apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
   },
+  { text: '블로그', href: getPermalink('/blog') },
   { text: '소개', href: getPermalink('/about') },
   { text: '문의', href: getPermalink('/contact') },
 ];
