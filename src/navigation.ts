@@ -24,7 +24,6 @@ export const footerData = {
       title: '스튜디오',
       links: [
         { text: '소개', href: getPermalink('/about') },
-        { text: '블로그', href: getPermalink('/blog') },
         { text: '문의', href: getPermalink('/contact') },
       ],
     },

@@ -46,6 +46,7 @@ const footerLinks = [
     href: getPermalink('/apps'),
     links: apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
   },
+  { title: '블로그', href: getPermalink('/blog'), links: [] },
   ...footerData.links,
 ];
 ---
