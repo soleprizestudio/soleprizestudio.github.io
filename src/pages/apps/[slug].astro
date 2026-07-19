@@ -48,7 +48,7 @@ const metadata = { title: app.data.title };
     {
       app.data.storeUrl && (
         <div class="mt-10 flex items-center gap-4 flex-wrap">
-          <a href={app.data.storeUrl} aria-label="App Store에서 다운로드">
+          <a href={app.data.storeUrl} target="_blank" rel="noopener noreferrer" aria-label="App Store에서 다운로드">
             <Image
               src="~/assets/images/app-store-badge-black.svg"
               alt="Download on the App Store"
