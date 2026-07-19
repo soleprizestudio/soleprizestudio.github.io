@@ -9,7 +9,7 @@ metadata:
   title:
     default: SolePrize Studio
     template: '%s — SolePrize Studio'
-  description: '앱과 게임을 만드는 스튜디오, SolePrize Studio입니다.'
+  description: '취미로 앱과 게임을 만드는 1인 개발자, SolePrize Studio입니다.'
   robots:
     index: true
     follow: true
