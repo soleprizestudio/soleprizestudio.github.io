@@ -3,7 +3,7 @@ title: 로또 1판
 description: 이번 주 로또 1등 당첨 판매점을 쉽고 빠르게 확인하는 앱입니다.
 icon: tabler:map-pin
 iconImage: ~/assets/images/lotto-1pan-icon.png
-storeUrl: '#'
+storeUrl: 'https://apps.apple.com/app/id6791630499'
 privacyUrl: /apps/lotto-1pan/privacy
 ---
 
