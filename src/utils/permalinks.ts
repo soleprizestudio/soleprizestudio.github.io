@@ -15,10 +15,15 @@ const createPath = (...params: string[]) => {
 
 const BASE_PATHNAME = SITE.base || '/';
 
+// `slugify` (limax) transliterates Latin-based scripts but strips Hangul
+// entirely, so a Korean-only tag/category/slug segment (e.g. "개발") comes
+// back as an empty string — which crashes route generation for [tag]/
+// [category] pages. Fall back to the original (trimmed) segment whenever
+// slugify has nothing left to offer.
 export const cleanSlug = (text = '') =>
   trimSlash(text)
     .split('/')
-    .map((slug) => slugify(slug))
+    .map((slug) => slugify(slug) || slug)
     .join('/');
 
 export const BLOG_BASE = cleanSlug(APP_BLOG?.list?.pathname);
