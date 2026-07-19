@@ -2,6 +2,7 @@ backend:
   name: github
   repo: soleprizestudio/soleprizestudio.github.io
   branch: main
+  base_url: 'https://home-page-cms.soleprizestudio.workers.dev'
 
 media_folder: 'src/assets/images'
 public_folder: '~/assets/images'
