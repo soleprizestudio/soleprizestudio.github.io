@@ -47,11 +47,16 @@ const metadataDefinition = () =>
     })
     .optional();
 
+// CMS date/datetime widgets can save an empty string when left blank
+// (instead of omitting the key), which z.date() otherwise rejects and
+// crashes the entire site build. Treat '' as unset.
+const optionalDate = z.preprocess((val) => (val === '' ? undefined : val), z.coerce.date().optional());
+
 const postCollection = defineCollection({
   loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
   schema: z.object({
-    publishDate: z.date().optional(),
-    updateDate: z.date().optional(),
+    publishDate: optionalDate,
+    updateDate: optionalDate,
     draft: z.boolean().optional(),
 
     title: z.string(),
