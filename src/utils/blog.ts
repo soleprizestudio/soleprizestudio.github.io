@@ -68,10 +68,14 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
       }
     : undefined;
 
-  const tags = rawTags.map((tag: string) => ({
-    slug: cleanSlug(tag),
-    title: tag,
-  }));
+  // CMS tag-list widgets can leave a blank entry (e.g. an added-but-unfilled
+  // row), and an empty tag breaks [tag] route generation for the whole site.
+  const tags = rawTags
+    .filter((tag: string) => tag.trim() !== '')
+    .map((tag: string) => ({
+      slug: cleanSlug(tag),
+      title: tag,
+    }));
 
   return {
     id: id,
