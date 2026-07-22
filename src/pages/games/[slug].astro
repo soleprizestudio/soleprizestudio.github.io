@@ -1,5 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import TableOfContents from '~/components/blog/TableOfContents.astro';
+import Giscus from '~/components/blog/Giscus.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -11,21 +13,53 @@ export async function getStaticPaths() {
 }
 
 const { game } = Astro.props;
-const { Content } = await render(game);
+const { Content, headings } = await render(game);
 
 const metadata = { title: game.data.title };
 ---
 
 <Layout metadata={metadata}>
-  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
-    <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter mb-6">{game.data.title}</h1>
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 lg:max-w-6xl">
+    <div class="lg:flex lg:gap-10 lg:items-start lg:max-w-none max-w-4xl mx-auto">
+      <article class="lg:max-w-4xl lg:min-w-0 lg:flex-1">
+        <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter mb-6">
+          {game.data.title}
+        </h1>
 
-    <div class="aspect-video w-full mb-8 border border-gray-200 dark:border-slate-600 rounded-lg overflow-hidden">
-      <iframe src={game.data.playPath} class="w-full h-full" title={game.data.title} loading="lazy"></iframe>
-    </div>
+        <div class="aspect-video w-full mb-8 border border-gray-200 dark:border-slate-600 rounded-lg overflow-hidden">
+          <iframe src={game.data.playPath} class="w-full h-full" title={game.data.title} loading="lazy"></iframe>
+        </div>
 
-    <div class="prose dark:prose-invert max-w-none">
-      <Content />
+        {
+          game.data.showToc && (
+            <div class="lg:hidden mb-8">
+              <TableOfContents headings={headings} variant="mobile" showCommentsAction={game.data.showComments} />
+            </div>
+          )
+        }
+
+        <div class="prose dark:prose-invert max-w-none">
+          <Content />
+        </div>
+
+        {
+          game.data.showComments && (
+            <div id="comments" class="mt-10 scroll-mt-[80px]">
+              <Giscus />
+            </div>
+          )
+        }
+      </article>
+      {
+        game.data.showToc && (
+          <TableOfContents
+            headings={headings}
+            variant="desktop"
+            showCommentsAction={game.data.showComments}
+            class="hidden lg:block lg:w-56 lg:shrink-0"
+          />
+        )
+      }
     </div>
   </section>
 </Layout>

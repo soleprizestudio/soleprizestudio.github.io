@@ -2,6 +2,8 @@
 import Layout from '~/layouts/PageLayout.astro';
 import { Icon } from 'astro-icon/components';
 import Image from '~/components/common/Image.astro';
+import TableOfContents from '~/components/blog/TableOfContents.astro';
+import Giscus from '~/components/blog/Giscus.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -13,66 +15,98 @@ export async function getStaticPaths() {
 }
 
 const { app } = Astro.props;
-const { Content } = await render(app);
+const { Content, headings } = await render(app);
 
 const metadata = { title: app.data.title };
 ---
 
 <Layout metadata={metadata}>
-  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
-    <div class="flex items-center gap-4 mb-6">
+  <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 lg:max-w-6xl">
+    <div class="lg:flex lg:gap-10 lg:items-start lg:max-w-none max-w-4xl mx-auto">
+      <article class="lg:max-w-4xl lg:min-w-0 lg:flex-1">
+        <div class="flex items-center gap-4 mb-6">
+          {
+            app.data.iconImage ? (
+              <Image
+                src={app.data.iconImage}
+                alt={`${app.data.title} 아이콘`}
+                width={96}
+                height={96}
+                densities={[1, 2, 3]}
+                layout="fixed"
+                class="rounded-[22%] shadow-md"
+              />
+            ) : (
+              <Icon name={app.data.icon || 'tabler:apps'} class="w-12 h-12 text-primary" />
+            )
+          }
+          <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter">
+            {app.data.title}
+          </h1>
+        </div>
+
+        <p class="text-muted text-xl mb-8">{app.data.description}</p>
+
+        {
+          app.data.showToc && (
+            <div class="lg:hidden mb-8">
+              <TableOfContents headings={headings} variant="mobile" showCommentsAction={app.data.showComments} />
+            </div>
+          )
+        }
+
+        <div class="prose dark:prose-invert max-w-none">
+          <Content />
+        </div>
+
+        {
+          app.data.storeUrl && (
+            <div class="mt-10 flex items-center gap-4 flex-wrap">
+              <a href={app.data.storeUrl} target="_blank" rel="noopener noreferrer" aria-label="App Store에서 다운로드">
+                <Image
+                  src="~/assets/images/app-store-badge-black.svg"
+                  alt="Download on the App Store"
+                  width={144}
+                  height={48}
+                  layout="fixed"
+                  class="dark:hidden"
+                />
+                <Image
+                  src="~/assets/images/app-store-badge-white.svg"
+                  alt="Download on the App Store"
+                  width={144}
+                  height={48}
+                  layout="fixed"
+                  class="hidden dark:block"
+                />
+              </a>
+              {app.data.privacyUrl && (
+                <a href={app.data.privacyUrl} class="text-muted hover:text-link hover:underline text-sm">
+                  개인정보처리방침
+                </a>
+              )}
+            </div>
+          )
+        }
+
+        {
+          app.data.showComments && (
+            <div id="comments" class="mt-10 scroll-mt-[80px]">
+              <Giscus />
+            </div>
+          )
+        }
+      </article>
       {
-        app.data.iconImage ? (
-          <Image
-            src={app.data.iconImage}
-            alt={`${app.data.title} 아이콘`}
-            width={96}
-            height={96}
-            densities={[1, 2, 3]}
-            layout="fixed"
-            class="rounded-[22%] shadow-md"
+        app.data.showToc && (
+          <TableOfContents
+            headings={headings}
+            variant="desktop"
+            showCommentsAction={app.data.showComments}
+            class="hidden lg:block lg:w-56 lg:shrink-0"
           />
-        ) : (
-          <Icon name={app.data.icon || 'tabler:apps'} class="w-12 h-12 text-primary" />
         )
       }
-      <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter">{app.data.title}</h1>
     </div>
-
-    <p class="text-muted text-xl mb-8">{app.data.description}</p>
-
-    <div class="prose dark:prose-invert max-w-none">
-      <Content />
-    </div>
-
-    {
-      app.data.storeUrl && (
-        <div class="mt-10 flex items-center gap-4 flex-wrap">
-          <a href={app.data.storeUrl} target="_blank" rel="noopener noreferrer" aria-label="App Store에서 다운로드">
-            <Image
-              src="~/assets/images/app-store-badge-black.svg"
-              alt="Download on the App Store"
-              width={144}
-              height={48}
-              layout="fixed"
-              class="dark:hidden"
-            />
-            <Image
-              src="~/assets/images/app-store-badge-white.svg"
-              alt="Download on the App Store"
-              width={144}
-              height={48}
-              layout="fixed"
-              class="hidden dark:block"
-            />
-          </a>
-          {app.data.privacyUrl && (
-            <a href={app.data.privacyUrl} class="text-muted hover:text-link hover:underline text-sm">
-              개인정보처리방침
-            </a>
-          )}
-        </div>
-      )
-    }
   </section>
 </Layout>

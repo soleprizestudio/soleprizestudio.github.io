@@ -52,6 +52,14 @@ const metadataDefinition = () =>
 // crashes the entire site build. Treat '' as unset.
 const optionalDate = z.preprocess((val) => (val === '' ? undefined : val), z.coerce.date().optional());
 
+// Lets each entry opt out of the comments+reactions widget or the
+// table-of-contents sidebar independently, e.g. for short posts/pages
+// that don't need a TOC, or pages where comments aren't wanted.
+const pageFeatureToggles = {
+  showComments: z.boolean().optional().default(true),
+  showToc: z.boolean().optional().default(true),
+};
+
 const postCollection = defineCollection({
   loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/posts' }),
   schema: z.object({
@@ -67,6 +75,8 @@ const postCollection = defineCollection({
     tags: z.array(z.string()).optional(),
     author: z.string().optional(),
 
+    ...pageFeatureToggles,
+
     metadata: metadataDefinition(),
   }),
 });
@@ -79,6 +89,8 @@ const gamesCollection = defineCollection({
     playPath: z.string(),
     thumbnail: z.string().optional(),
     draft: z.boolean().optional().default(false),
+
+    ...pageFeatureToggles,
   }),
 });
 
@@ -92,6 +104,8 @@ const appsCollection = defineCollection({
     storeUrl: z.string().optional(),
     privacyUrl: z.string().optional(),
     draft: z.boolean().optional().default(false),
+
+    ...pageFeatureToggles,
   }),
 });
 

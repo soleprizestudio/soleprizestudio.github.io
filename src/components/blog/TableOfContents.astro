@@ -6,14 +6,15 @@ export interface Props {
   headings?: MarkdownHeading[];
   class?: string;
   variant?: 'mobile' | 'desktop';
+  showCommentsAction?: boolean;
 }
 
-const { headings = [], class: className = '', variant = 'desktop' } = Astro.props;
+const { headings = [], class: className = '', variant = 'desktop', showCommentsAction = true } = Astro.props;
 const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 
 const actions = [
   { action: 'top', icon: 'tabler:arrow-up', text: '맨 위로' },
-  { action: 'comments', icon: 'tabler:message-circle', text: '댓글로 이동' },
+  ...(showCommentsAction ? [{ action: 'comments', icon: 'tabler:message-circle', text: '댓글로 이동' }] : []),
   { action: 'copy', icon: 'tabler:link', text: '링크 복사' },
 ] as const;
 ---

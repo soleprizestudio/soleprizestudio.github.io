@@ -25,6 +25,8 @@ export interface Post {
   metadata?: MetaData;
 
   draft?: boolean;
+  showComments?: boolean;
+  showToc?: boolean;
 
   /** Rendered Astro component factory for the post body. */
   Content?: AstroComponentFactory;
