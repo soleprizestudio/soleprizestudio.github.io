@@ -2,3 +2,10 @@ dist
 node_modules
 .github
 .changeset
+
+# CMS-managed (Sitepins) - not hand-formatted, don't enforce house style
+.sitepins
+public/.well-known
+src/data/posts
+src/data/games
+src/data/apps
