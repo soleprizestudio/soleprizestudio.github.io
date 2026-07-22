@@ -11,7 +11,7 @@ collections:
   - name: 'post'
     label: '게시물'
     label_singular: '게시물'
-    folder: 'src/data/post'
+    folder: 'src/data/posts'
     create: true
     slug: '{{slug}}'
     fields:

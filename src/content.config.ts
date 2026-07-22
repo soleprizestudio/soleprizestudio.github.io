@@ -53,7 +53,7 @@ const metadataDefinition = () =>
 const optionalDate = z.preprocess((val) => (val === '' ? undefined : val), z.coerce.date().optional());
 
 const postCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/posts' }),
   schema: z.object({
     publishDate: optionalDate,
     updateDate: optionalDate,
