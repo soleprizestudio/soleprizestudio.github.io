@@ -1,0 +1,8 @@
+{
+  "content": "src/data/posts",
+  "media": "public/images/uploads",
+  "public": "public",
+  "configs": [],
+  "custom-commit": false,
+  "arrangement": []
+}
