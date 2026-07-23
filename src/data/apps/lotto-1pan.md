@@ -5,6 +5,8 @@ icon: tabler:map-pin
 iconImage: ~/assets/images/lotto-1pan-icon.png
 storeUrl: 'https://apps.apple.com/app/id6791630499'
 privacyUrl: /apps/lotto-1pan/privacy
+showToc: true
+showComments: true
 ---
 
 이번 주 로또 1등은 어디에서 나왔을까요?
