@@ -1,0 +1,37 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<span class="view-counter inline-flex items-center">
+  <Icon name="tabler:eye" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
+  <span class="view-count ml-1">-</span>
+</span>
+
+<script>
+  const WORKER_URL = 'https://home-page-cms.soleprizestudio.workers.dev';
+  const initialized = new WeakSet<Element>();
+
+  async function loadViews(el: HTMLElement) {
+    const countEl = el.querySelector<HTMLElement>('.view-count');
+    if (!countEl) return;
+    try {
+      const res = await fetch(`${WORKER_URL}/views${window.location.pathname}`);
+      if (!res.ok) throw new Error('view fetch failed');
+      const data = await res.json();
+      countEl.textContent = data.views.toLocaleString();
+    } catch {
+      countEl.textContent = '-';
+    }
+  }
+
+  function initViewCounters() {
+    document.querySelectorAll<HTMLElement>('.view-counter').forEach((el) => {
+      if (initialized.has(el)) return;
+      initialized.add(el);
+      loadViews(el);
+    });
+  }
+
+  initViewCounters();
+  document.addEventListener('astro:page-load', initViewCounters);
+</script>
