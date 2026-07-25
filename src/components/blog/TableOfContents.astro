@@ -21,7 +21,13 @@ const actions = [
 
 {
   (
-    <div class:list={['not-prose text-sm', className]}>
+    <div
+      class:list={[
+        'not-prose text-sm',
+        className,
+        variant === 'desktop' && 'sticky top-[113px] max-h-[calc(100vh-113px)] overflow-y-auto flex items-center',
+      ]}
+    >
       {variant === 'mobile' ? (
         <details class="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-3">
           <summary class="cursor-pointer font-medium">목차</summary>
@@ -54,7 +60,7 @@ const actions = [
           </div>
         </details>
       ) : (
-        <div class="sticky top-24">
+        <div class="w-full py-6">
           {items.length > 0 && (
             <>
               <p class="font-medium mb-3">목차</p>
