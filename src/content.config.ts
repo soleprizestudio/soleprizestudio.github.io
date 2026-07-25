@@ -55,10 +55,19 @@ const optionalDate = z.preprocess((val) => (val === '' ? undefined : val), z.coe
 // Lets each entry opt out of the comments+reactions widget or the
 // table-of-contents sidebar independently, e.g. for short posts/pages
 // that don't need a TOC, or pages where comments aren't wanted.
-const pageFeatureToggles = {
-  showComments: z.boolean().optional().default(true),
-  showToc: z.boolean().optional().default(true),
-};
+// TableOfContents' showCommentsAction prop already hides the "댓글로
+// 이동" quick-nav button whenever showComments is off, so turning off
+// the default here is enough - no template changes needed per collection.
+const pageFeatureToggles = (defaults: { showComments?: boolean; showToc?: boolean } = {}) => ({
+  showComments: z
+    .boolean()
+    .optional()
+    .default(defaults.showComments ?? true),
+  showToc: z
+    .boolean()
+    .optional()
+    .default(defaults.showToc ?? true),
+});
 
 const postCollection = defineCollection({
   loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/posts' }),
@@ -75,7 +84,7 @@ const postCollection = defineCollection({
     tags: z.array(z.string()).optional(),
     author: z.string().optional(),
 
-    ...pageFeatureToggles,
+    ...pageFeatureToggles(),
 
     metadata: metadataDefinition(),
   }),
@@ -90,7 +99,7 @@ const gamesCollection = defineCollection({
     thumbnail: z.string().optional(),
     draft: z.boolean().optional().default(false),
 
-    ...pageFeatureToggles,
+    ...pageFeatureToggles({ showComments: false }),
   }),
 });
 
@@ -105,7 +114,7 @@ const appsCollection = defineCollection({
     privacyUrl: z.string().optional(),
     draft: z.boolean().optional().default(false),
 
-    ...pageFeatureToggles,
+    ...pageFeatureToggles({ showComments: false }),
   }),
 });
 
