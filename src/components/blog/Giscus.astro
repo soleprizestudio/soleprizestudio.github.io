@@ -4,24 +4,20 @@
 
 <div class="giscus not-prose"></div>
 
-<script
-  is:inline
-  src="https://giscus.app/client.js"
-  data-repo="soleprizestudio/soleprizestudio.github.io"
-  data-repo-id="R_kgDOTNLseg"
-  data-category="Comments"
-  data-category-id="DIC_kwDOTNLses4DBwht"
-  data-mapping="pathname"
-  data-strict="0"
-  data-reactions-enabled="1"
-  data-emit-metadata="0"
-  data-input-position="bottom"
-  data-theme="light"
-  data-lang="ko"
-  crossorigin="anonymous"
-  async></script>
-
 <script>
+  const GISCUS_CONFIG = {
+    'data-repo': 'soleprizestudio/soleprizestudio.github.io',
+    'data-repo-id': 'R_kgDOTNLseg',
+    'data-category': 'Comments',
+    'data-category-id': 'DIC_kwDOTNLses4DBwht',
+    'data-mapping': 'pathname',
+    'data-strict': '0',
+    'data-reactions-enabled': '1',
+    'data-emit-metadata': '0',
+    'data-input-position': 'bottom',
+    'data-lang': 'ko',
+  };
+
   function currentGiscusTheme() {
     return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
   }
@@ -34,6 +30,26 @@
     );
   }
 
+  // Astro's view-transitions swap the DOM on navigation without a hard
+  // reload, and a <script src="..."> inserted that way never runs on its
+  // own - only a real refresh triggered it. Recreate the script element
+  // from scratch on every page-load (including soft navigations) instead
+  // of relying on a single static <script> tag.
+  function loadGiscus() {
+    document.querySelectorAll<HTMLElement>('.giscus').forEach((container) => {
+      if (container.querySelector('iframe')) return;
+      container.innerHTML = '';
+
+      const script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.crossOrigin = 'anonymous';
+      script.async = true;
+      Object.entries(GISCUS_CONFIG).forEach(([key, value]) => script.setAttribute(key, value));
+      script.setAttribute('data-theme', currentGiscusTheme());
+      container.appendChild(script);
+    });
+  }
+
   const observer = new MutationObserver(sendGiscusTheme);
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
@@ -42,4 +58,7 @@
     if (!(event.data as { giscus?: unknown })?.giscus) return;
     sendGiscusTheme();
   });
+
+  loadGiscus();
+  document.addEventListener('astro:page-load', loadGiscus);
 </script>
