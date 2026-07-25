@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 const { game } = Astro.props;
 const { Content, headings } = await render(game);
 
-const metadata = { title: game.data.title };
+const metadata = { title: game.data.title, description: game.data.teaser };
 ---
 
 <Layout metadata={metadata}>
