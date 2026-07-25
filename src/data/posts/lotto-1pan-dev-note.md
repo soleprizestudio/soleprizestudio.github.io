@@ -7,7 +7,7 @@ tags:
 image: ""
 publishDate: ""
 author: "평발"
-draft: true
+draft: false
 ---
 # 번호뽑는 기능이 없는 이상한 로또 앱 - "로또 1판" 개발기
 
