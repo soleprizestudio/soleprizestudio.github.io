@@ -40,12 +40,27 @@ const generatePermalink = async ({
     .join('/');
 };
 
+// Posts saved without a publishDate need *some* date to build their
+// (date-based) permalink from. Falling back to `new Date()` makes that
+// date - and therefore the post's URL - different on every rebuild, which
+// silently orphans Giscus comment threads and breaks bookmarks/backlinks.
+// Hash the stable file id into a pseudo-date instead, so the fallback URL
+// stays fixed until a real publishDate is filled in.
+const stableFallbackDate = (id: string): Date => {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash * 31 + id.charCodeAt(i)) | 0;
+  }
+  const twentyYearsInSeconds = 60 * 60 * 24 * 365 * 20;
+  return new Date((Math.abs(hash) % twentyYearsInSeconds) * 1000);
+};
+
 const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> => {
   const { id, data } = post;
   const { Content, headings, remarkPluginFrontmatter } = await render(post);
 
   const {
-    publishDate: rawPublishDate = new Date(),
+    publishDate: rawPublishDate = stableFallbackDate(id),
     updateDate: rawUpdateDate,
     title,
     excerpt,
