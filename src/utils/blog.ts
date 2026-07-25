@@ -187,6 +187,20 @@ export const findLatestPosts = async ({ count }: { count?: number }): Promise<Ar
 };
 
 /** */
+export const findCategories = async (): Promise<Array<Taxonomy>> => {
+  const posts = await fetchPosts();
+  const categories: Record<string, Taxonomy> = {};
+
+  posts.forEach((post) => {
+    if (post.category?.slug) {
+      categories[post.category.slug] = post.category;
+    }
+  });
+
+  return Object.values(categories).sort((a, b) => a.title.localeCompare(b.title, 'ko'));
+};
+
+/** */
 export const getStaticPathsBlogList = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogListRouteEnabled) return [];
   return paginate(await fetchPosts(), {

@@ -1,0 +1,88 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getPermalink } from '~/utils/permalinks';
+import type { Taxonomy } from '~/types';
+
+export interface Props {
+  categories: Taxonomy[];
+  activeCategorySlug?: string;
+}
+
+const { categories, activeCategorySlug } = Astro.props;
+
+const pillClass = (isActive: boolean) =>
+  isActive
+    ? 'bg-primary text-white dark:bg-blue-600'
+    : 'bg-gray-100 dark:bg-slate-800 text-muted dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700';
+---
+
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
+  {
+    categories.length > 0 && (
+      <ul class="flex flex-wrap gap-2">
+        <li>
+          <a
+            href={getPermalink('/posts')}
+            class={`inline-block rounded-full px-3.5 py-1.5 text-sm font-medium transition ${pillClass(!activeCategorySlug)}`}
+          >
+            전체
+          </a>
+        </li>
+        {categories.map((category) => (
+          <li>
+            <a
+              href={getPermalink(category.slug, 'category')}
+              class={`inline-block rounded-full px-3.5 py-1.5 text-sm font-medium transition ${pillClass(activeCategorySlug === category.slug)}`}
+            >
+              {category.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <div class="relative sm:w-64 sm:shrink-0">
+    <Icon
+      name="tabler:search"
+      class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted dark:text-slate-400"
+    />
+    <input
+      type="search"
+      id="blog-search-input"
+      placeholder="글 검색"
+      class="w-full rounded-full border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 pl-9 pr-4 py-1.5 text-sm text-default placeholder:text-muted dark:placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+    />
+  </div>
+</div>
+
+<p id="blog-search-empty" class="hidden text-muted text-center mb-10">검색 결과가 없어요.</p>
+
+<script>
+  const initialized = new WeakSet<Element>();
+
+  function initBlogSearch() {
+    const input = document.querySelector<HTMLInputElement>('#blog-search-input');
+    if (!input || initialized.has(input)) return;
+    initialized.add(input);
+
+    const items = Array.from(document.querySelectorAll<HTMLElement>('.post-list-item'));
+    const emptyMessage = document.querySelector<HTMLElement>('#blog-search-empty');
+
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        const matches = !query || (item.dataset.search ?? '').includes(query);
+        item.classList.toggle('hidden', !matches);
+        if (matches) visibleCount += 1;
+      });
+
+      emptyMessage?.classList.toggle('hidden', !query || visibleCount > 0);
+    });
+  }
+
+  initBlogSearch();
+  document.addEventListener('astro:page-load', initBlogSearch);
+</script>
