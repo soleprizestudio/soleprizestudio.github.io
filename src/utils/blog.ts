@@ -40,6 +40,18 @@ const generatePermalink = async ({
     .join('/');
 };
 
+// Lightweight markdown-to-plain-text for client-side search matching only;
+// doesn't need to be perfect, just needs to not leave syntax noise behind.
+const stripMarkdown = (markdown: string): string =>
+  markdown
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`[^`]*`/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/[#>*_~-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
 const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> => {
   const { id, data } = post;
   const { Content, headings, remarkPluginFrontmatter } = await render(post);
@@ -93,6 +105,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     title: title,
     excerpt: excerpt,
     image: image,
+    bodyText: stripMarkdown(post.body ?? '').toLowerCase(),
 
     category: category,
     tags: tags,

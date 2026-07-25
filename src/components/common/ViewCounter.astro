@@ -1,8 +1,17 @@
 ---
 import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  /** Absolute path of the post whose count to show. Defaults to the current page's path. */
+  path?: string;
+  /** When true, only reads the count without incrementing it (for list views). */
+  readOnly?: boolean;
+}
+
+const { path, readOnly = false } = Astro.props;
 ---
 
-<span class="view-counter inline-flex items-center">
+<span class="view-counter inline-flex items-center" data-view-path={path ?? ''} data-view-readonly={readOnly}>
   <Icon name="tabler:eye" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
   <span class="view-count ml-1">-</span>
 </span>
@@ -14,8 +23,10 @@ import { Icon } from 'astro-icon/components';
   async function loadViews(el: HTMLElement) {
     const countEl = el.querySelector<HTMLElement>('.view-count');
     if (!countEl) return;
+    const path = el.dataset.viewPath || window.location.pathname;
+    const readOnly = el.dataset.viewReadonly === 'true';
     try {
-      const res = await fetch(`${WORKER_URL}/views${window.location.pathname}`);
+      const res = await fetch(`${WORKER_URL}/views${path}${readOnly ? '?read=1' : ''}`);
       if (!res.ok) throw new Error('view fetch failed');
       const data = await res.json();
       countEl.textContent = data.views.toLocaleString();

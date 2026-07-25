@@ -17,6 +17,8 @@ export interface Post {
   /** Optional summary of post content. */
   excerpt?: string;
   image?: ImageMetadata | string;
+  /** Plain-text (markdown stripped) body, lowercased, for client-side search matching. */
+  bodyText?: string;
 
   category?: Taxonomy;
   tags?: Taxonomy[];

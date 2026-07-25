@@ -12,7 +12,10 @@ const { posts } = Astro.props;
 <ul>
   {
     posts.map((post) => (
-      <li class="post-list-item mb-12 md:mb-20" data-search={`${post.title} ${post.excerpt ?? ''}`.toLowerCase()}>
+      <li
+        class="post-list-item mb-12 md:mb-20"
+        data-search={`${post.title} ${post.excerpt ?? ''} ${post.bodyText ?? ''}`.toLowerCase()}
+      >
         <Item post={post} />
       </li>
     ))
