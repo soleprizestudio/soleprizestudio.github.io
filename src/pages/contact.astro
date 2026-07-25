@@ -31,6 +31,7 @@ const sent = Astro.url.searchParams.get('sent') === '1';
 
   <ContactUs
     id="form"
+    classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }}
     title="메시지를 남겨주세요"
     subtitle="이메일로도 연락 가능합니다: soleprizestudio@gmail.com"
     action="https://api.web3forms.com/submit"
