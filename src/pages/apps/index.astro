@@ -15,6 +15,7 @@ const metadata = { title: '앱' };
 
   <Features
     columns={Math.min(2, apps.length)}
+    classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }}
     items={apps.map((app) => ({
       title: app.data.title,
       description: app.data.description,
