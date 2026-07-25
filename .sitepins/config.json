@@ -1,5 +1,5 @@
 {
-  "content": "src/data/posts",
+  "content": "src/data",
   "media": "public/images/uploads",
   "public": "public",
   "configs": [],
