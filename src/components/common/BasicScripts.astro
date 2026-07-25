@@ -15,6 +15,11 @@ import { UI } from 'astrowind:config';
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', theme === 'dark' ? '#030620' : '#ffffff');
+    }
   }
 
   const initTheme = function () {
@@ -73,6 +78,11 @@ import { UI } from 'astrowind:config';
 
       document.documentElement.classList.toggle('dark');
       localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', localStorage.theme === 'dark' ? '#030620' : '#ffffff');
+      }
     });
 
     attachEvent('[data-aw-social-share]', 'click', function (_, elem) {

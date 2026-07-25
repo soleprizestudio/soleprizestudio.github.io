@@ -11,6 +11,12 @@ import { UI } from 'astrowind:config';
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', theme === 'dark' ? '#030620' : '#ffffff');
+    }
+
     const matches = document.querySelectorAll('[data-aw-toggle-color-scheme] > input');
 
     if (matches && matches.length) {

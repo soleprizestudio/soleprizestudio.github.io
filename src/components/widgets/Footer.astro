@@ -56,7 +56,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
         links.map(({ title, href, links }) => (
           <div class="col-span-6 md:col-span-3 lg:col-span-2">
             {href ? (
-              <a class="dark:text-gray-300 font-medium mb-2 hover:text-link dark:hover:text-white block" href={href}>
+              <a class="dark:text-gray-300 font-medium mb-2 hover:text-primary dark:hover:text-white block" href={href}>
                 {title}
               </a>
             ) : (
