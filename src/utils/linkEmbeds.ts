@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
+import sharp from 'sharp';
 import type { RehypePlugin } from '@astrojs/markdown-remark';
 import type { Element, ElementContent, Root } from 'hast';
 
@@ -10,6 +11,7 @@ interface InternalLinkEntry {
   type: InternalLinkType;
   title: string;
   description: string;
+  iconPath?: string;
 }
 
 const TYPE_LABELS: Record<InternalLinkType, string> = {
@@ -18,7 +20,15 @@ const TYPE_LABELS: Record<InternalLinkType, string> = {
   posts: '블로그',
 };
 
+const IMAGE_FIELD_BY_TYPE: Record<InternalLinkType, string> = {
+  apps: 'iconImage',
+  games: 'thumbnail',
+  posts: 'image',
+};
+
 const SITE_ORIGIN = 'https://soleprizestudio.github.io';
+const ICON_OUTPUT_DIR = 'embed-icons';
+const ICON_SIZE = 56;
 
 function parseFrontmatter(raw: string): Record<string, unknown> | null {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
@@ -30,37 +40,71 @@ function parseFrontmatter(raw: string): Record<string, unknown> | null {
   }
 }
 
-function loadEntries(dir: string, type: InternalLinkType): Record<string, InternalLinkEntry> {
+/** Resizes a `~/assets/...` source image into public/embed-icons so it can be served with no Astro image pipeline. */
+async function generateIcon(rootDir: string, sourceRef: string, outName: string): Promise<string | undefined> {
+  if (!sourceRef.startsWith('~/')) return undefined;
+
+  const sourcePath = path.join(rootDir, 'src', sourceRef.slice(2));
+  if (!fs.existsSync(sourcePath)) return undefined;
+
+  const outDir = path.join(rootDir, 'public', ICON_OUTPUT_DIR);
+  const outFile = path.join(outDir, `${outName}.webp`);
+
+  try {
+    fs.mkdirSync(outDir, { recursive: true });
+    await sharp(sourcePath).resize(ICON_SIZE, ICON_SIZE, { fit: 'cover' }).webp({ quality: 80 }).toFile(outFile);
+    return `/${ICON_OUTPUT_DIR}/${outName}.webp`;
+  } catch {
+    return undefined;
+  }
+}
+
+async function loadEntries(
+  rootDir: string,
+  dir: string,
+  type: InternalLinkType
+): Promise<Record<string, InternalLinkEntry>> {
   const entries: Record<string, InternalLinkEntry> = {};
   if (!fs.existsSync(dir)) return entries;
 
-  for (const file of fs.readdirSync(dir)) {
-    if (!/\.mdx?$/.test(file)) continue;
-    const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
-    const data = parseFrontmatter(raw);
-    if (!data || data.draft) continue;
+  const files = fs.readdirSync(dir).filter((file) => /\.mdx?$/.test(file));
 
-    const slug = file.replace(/\.mdx?$/, '');
-    const title = typeof data.title === 'string' ? data.title : slug;
-    const description =
-      (typeof data.description === 'string' && data.description) ||
-      (typeof data.teaser === 'string' && data.teaser) ||
-      (typeof data.excerpt === 'string' && data.excerpt) ||
-      '';
+  await Promise.all(
+    files.map(async (file) => {
+      const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
+      const data = parseFrontmatter(raw);
+      if (!data || data.draft) return;
 
-    entries[`/${type}/${slug}`] = { type, title, description };
-  }
+      const slug = file.replace(/\.mdx?$/, '');
+      const title = typeof data.title === 'string' ? data.title : slug;
+      const description =
+        (typeof data.description === 'string' && data.description) ||
+        (typeof data.teaser === 'string' && data.teaser) ||
+        (typeof data.excerpt === 'string' && data.excerpt) ||
+        '';
+
+      const imageField = data[IMAGE_FIELD_BY_TYPE[type]];
+      const iconPath =
+        typeof imageField === 'string' && imageField
+          ? await generateIcon(rootDir, imageField, `${type}-${slug}`)
+          : undefined;
+
+      entries[`/${type}/${slug}`] = { type, title, description, iconPath };
+    })
+  );
 
   return entries;
 }
 
 /** Reads frontmatter directly off disk (not via astro:content) so it can run from astro.config.ts. */
-export function buildInternalLinkIndex(rootDir: string): Record<string, InternalLinkEntry> {
-  return {
-    ...loadEntries(path.join(rootDir, 'src/data/apps'), 'apps'),
-    ...loadEntries(path.join(rootDir, 'src/data/games'), 'games'),
-    ...loadEntries(path.join(rootDir, 'src/data/posts'), 'posts'),
-  };
+export async function buildInternalLinkIndex(rootDir: string): Promise<Record<string, InternalLinkEntry>> {
+  const [apps, games, posts] = await Promise.all([
+    loadEntries(rootDir, path.join(rootDir, 'src/data/apps'), 'apps'),
+    loadEntries(rootDir, path.join(rootDir, 'src/data/games'), 'games'),
+    loadEntries(rootDir, path.join(rootDir, 'src/data/posts'), 'posts'),
+  ]);
+
+  return { ...apps, ...games, ...posts };
 }
 
 function extractInternalPath(href: string): string | null {
@@ -122,6 +166,30 @@ function internalLinkEmbedTransform(tree: Root, index: Record<string, InternalLi
       });
     }
 
+    const cardChildren: Element['children'] = entry.iconPath
+      ? [
+          {
+            type: 'element',
+            tagName: 'img',
+            properties: {
+              src: entry.iconPath,
+              alt: '',
+              width: ICON_SIZE,
+              height: ICON_SIZE,
+              loading: 'lazy',
+              className: ['w-14', 'h-14', 'shrink-0', 'rounded-xl', 'object-cover'],
+            },
+            children: [],
+          },
+          {
+            type: 'element',
+            tagName: 'div',
+            properties: { className: ['min-w-0'] },
+            children: textNodes,
+          },
+        ]
+      : textNodes;
+
     const card: Element = {
       type: 'element',
       tagName: 'a',
@@ -130,7 +198,9 @@ function internalLinkEmbedTransform(tree: Root, index: Record<string, InternalLi
         className: [
           'not-prose',
           'flex',
-          'flex-col',
+          entry.iconPath ? 'flex-row' : 'flex-col',
+          entry.iconPath ? 'items-center' : '',
+          entry.iconPath ? 'gap-3' : '',
           'rounded-lg',
           'border',
           'border-gray-200',
@@ -142,9 +212,9 @@ function internalLinkEmbedTransform(tree: Root, index: Record<string, InternalLi
           'no-underline',
           'hover:shadow-md',
           'transition',
-        ],
+        ].filter(Boolean),
       },
-      children: textNodes,
+      children: cardChildren,
     };
 
     tree.children[i] = card;

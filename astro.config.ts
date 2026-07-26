@@ -20,7 +20,7 @@ import { buildInternalLinkIndex, internalLinkEmbedRehypePlugin } from './src/uti
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const internalLinkIndex = buildInternalLinkIndex(__dirname);
+const internalLinkIndex = await buildInternalLinkIndex(__dirname);
 
 const hasExternalScripts = true;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
