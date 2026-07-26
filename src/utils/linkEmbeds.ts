@@ -64,13 +64,16 @@ export function buildInternalLinkIndex(rootDir: string): Record<string, Internal
 }
 
 function extractInternalPath(href: string): string | null {
-  if (href.startsWith('/')) return href.replace(/\/$/, '') || '/';
-  if (href.startsWith(SITE_ORIGIN)) return href.slice(SITE_ORIGIN.length).replace(/\/$/, '') || '/';
+  // Only used to look up card data - the real href (with any #anchor) is kept as-is on the link.
+  const withoutHash = href.split('#')[0];
+  if (withoutHash.startsWith('/')) return withoutHash.replace(/\/$/, '') || '/';
+  if (withoutHash.startsWith(SITE_ORIGIN)) return withoutHash.slice(SITE_ORIGIN.length).replace(/\/$/, '') || '/';
   return null;
 }
 
+// Sitepins' rich-text editor tends to leave stray zero-width spaces around links.
 function isWhitespaceText(node: ElementContent): boolean {
-  return node.type === 'text' && !node.value.trim();
+  return node.type === 'text' && !node.value.replace(/\u200B/g, '').trim();
 }
 
 function internalLinkEmbedTransform(tree: Root, index: Record<string, InternalLinkEntry>) {
