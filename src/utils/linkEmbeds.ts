@@ -52,7 +52,10 @@ async function generateIcon(rootDir: string, sourceRef: string, outName: string)
 
   try {
     fs.mkdirSync(outDir, { recursive: true });
-    await sharp(sourcePath).resize(ICON_SIZE, ICON_SIZE, { fit: 'cover' }).webp({ quality: 80 }).toFile(outFile);
+    // Rendered at ICON_SIZE via CSS/width+height, but generated at 3x pixel
+    // density so it stays crisp on retina screens instead of looking blurry.
+    const pixelSize = ICON_SIZE * 3;
+    await sharp(sourcePath).resize(pixelSize, pixelSize, { fit: 'cover' }).webp({ quality: 80 }).toFile(outFile);
     return `/${ICON_OUTPUT_DIR}/${outName}.webp`;
   } catch {
     return undefined;
