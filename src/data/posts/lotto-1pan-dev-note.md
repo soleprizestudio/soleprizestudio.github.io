@@ -4,7 +4,7 @@ excerpt: "지도 기능만 있는 로또 앱을 개발하는 과정에서 있었
 category: "개발노트"
 tags:
   - 개발
-  - 로또1판
+  - 로또 1판
 image: ""
 publishDate: 2026-07-25T08:45:00.000Z
 author: "평발"
