@@ -16,8 +16,11 @@ import type { AstroIntegration } from 'astro';
 import astrowind from './vendor/integration';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter';
+import { buildInternalLinkIndex, internalLinkEmbedRehypePlugin } from './src/utils/linkEmbeds';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const internalLinkIndex = buildInternalLinkIndex(__dirname);
 
 const hasExternalScripts = true;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
@@ -87,7 +90,7 @@ export default defineConfig({
   markdown: {
     processor: unified({
       remarkPlugins: [readingTimeRemarkPlugin],
-      rehypePlugins: [responsiveTablesRehypePlugin],
+      rehypePlugins: [responsiveTablesRehypePlugin, internalLinkEmbedRehypePlugin(internalLinkIndex)],
     }),
   },
 
