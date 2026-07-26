@@ -11,7 +11,11 @@ export interface Props {
 const { path, readOnly = false } = Astro.props;
 ---
 
-<span class="view-counter inline-flex items-center" data-view-path={path ?? ''} data-view-readonly={readOnly}>
+<span
+  class="view-counter inline-flex items-center shrink-0 whitespace-nowrap"
+  data-view-path={path ?? ''}
+  data-view-readonly={readOnly}
+>
   <Icon name="tabler:eye" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
   <span class="view-count ml-1">-</span>
 </span>
