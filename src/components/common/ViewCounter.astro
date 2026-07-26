@@ -24,10 +24,14 @@ const { path, readOnly = false } = Astro.props;
   const WORKER_URL = 'https://home-page-cms.soleprizestudio.workers.dev';
   const initialized = new WeakSet<Element>();
 
+  function normalizePath(path: string): string {
+    return path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
+  }
+
   async function loadViews(el: HTMLElement) {
     const countEl = el.querySelector<HTMLElement>('.view-count');
     if (!countEl) return;
-    const path = el.dataset.viewPath || window.location.pathname;
+    const path = normalizePath(el.dataset.viewPath || window.location.pathname);
     const readOnly = el.dataset.viewReadonly === 'true';
     try {
       const res = await fetch(`${WORKER_URL}/views${path}${readOnly ? '?read=1' : ''}`);
