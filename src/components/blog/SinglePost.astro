@@ -30,8 +30,8 @@ const { post, url } = Astro.props;
           ? 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'
           : 'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade'}
       >
-        <div class="flex justify-between flex-col sm:flex-row max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6 sm:items-center">
-          <p>
+        <div class="flex justify-between items-start gap-2 max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6">
+          <p class="min-w-0">
             <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
             <time datetime={String(post.publishDate)} class="inline-block">{getFormattedDate(post.publishDate)}</time>
             {
