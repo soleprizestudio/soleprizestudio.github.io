@@ -6,7 +6,7 @@ tags:
   - 로또 1판
   - 개발
 image: ""
-publishDate: ""
+publishDate: "2026.08.09"
 author: ""
 draft: false
 ---
