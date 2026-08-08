@@ -6,7 +6,7 @@ tags:
   - 기획
   - 아이디어 발굴
 image: ""
-publishDate: ""
+publishDate: "2026.07.26"
 author: ""
 draft: false
 ---
