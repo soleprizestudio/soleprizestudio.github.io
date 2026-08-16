@@ -1,6 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import { DEFAULT_LOCALE, LOCALES, type Locale } from '~/i18n';
+import { DEFAULT_LOCALE, LOCALES, localePath, type Locale } from '~/i18n';
 
 type LocalizedCollection = 'games' | 'apps';
 
@@ -8,11 +8,21 @@ type LocalizedCollection = 'games' | 'apps';
 export const entryKey = (entry: CollectionEntry<LocalizedCollection>): string => entry.data.translationKey || entry.id;
 
 /**
- * Published entries for one locale.
+ * Where an entry actually lives, based on the language it is written in.
  *
- * Falls back to the default-locale entry when a translation doesn't exist yet,
- * so adding English is incremental: an untranslated game still gets an /en/
- * page (in Korean) rather than a 404, and the nav never links into a hole.
+ * An untranslated entry keeps its Korean URL even when it is listed on an
+ * English page, so the same text never gets published at two addresses.
+ */
+export const entryPath = (collection: LocalizedCollection, entry: CollectionEntry<LocalizedCollection>): string =>
+  localePath(`/${collection}/${entryKey(entry)}`, entry.data.lang);
+
+/**
+ * Entries to show for one locale, preferring a translation and otherwise
+ * falling back to the Korean original, so nothing silently disappears from
+ * the nav or the listing just because it hasn't been translated yet.
+ *
+ * Pair this with `entryPath` for links - a fallback entry links to its
+ * Korean page rather than an /en/ URL serving Korean content.
  */
 export async function getLocalizedEntries<C extends LocalizedCollection>(
   collection: C,
@@ -37,19 +47,28 @@ export async function getLocalizedEntries<C extends LocalizedCollection>(
   return [...byKey.values()];
 }
 
-/** getStaticPaths rows for every locale of a collection, keyed by shared slug. */
+/**
+ * getStaticPaths rows for one locale.
+ *
+ * Only entries genuinely written in that locale get a page. Without a
+ * translation there is no /en/ URL at all, so Google never sees the same
+ * Korean text under two addresses.
+ */
 export async function getLocalizedStaticPaths<C extends LocalizedCollection>(
   collection: C,
   locale: Locale
 ): Promise<{ params: { slug: string }; props: { entry: CollectionEntry<C>; locale: Locale } }[]> {
-  const entries = await getLocalizedEntries(collection, locale);
-  return entries.map((entry) => ({
-    params: { slug: entryKey(entry) },
-    props: { entry, locale },
-  }));
+  const published = await getCollection(collection, ({ data }) => !data.draft);
+
+  return published
+    .filter((entry) => entry.data.lang === locale)
+    .map((entry) => ({
+      params: { slug: entryKey(entry) },
+      props: { entry: entry as CollectionEntry<C>, locale },
+    }));
 }
 
-/** Locales that have a real (non-fallback) page for this key - used to emit hreflang. */
+/** Locales that have a real translation for this key - used to emit hreflang. */
 export async function getAvailableLocales(collection: LocalizedCollection, key: string): Promise<Locale[]> {
   const published = await getCollection(collection, ({ data }) => !data.draft);
   const langs = published.filter((entry) => entryKey(entry) === key).map((entry) => entry.data.lang);

@@ -5,7 +5,7 @@ import Footer from '~/components/widgets/Footer.astro';
 
 import { headerData, footerData } from '~/navigation';
 import { DEFAULT_LOCALE, LOCALES, getLocaleFromUrl, localePath, useTranslations, type Locale } from '~/i18n';
-import { getLocalizedEntries, entryKey } from '~/utils/localizedContent';
+import { getLocalizedEntries, entryPath } from '~/utils/localizedContent';
 
 import type { MetaData } from '~/types';
 
@@ -28,12 +28,12 @@ const headerLinks = [
   {
     text: t('nav.games'),
     href: lp('/games'),
-    links: games.map((game) => ({ text: game.data.title, href: lp(`/games/${entryKey(game)}`) })),
+    links: games.map((game) => ({ text: game.data.title, href: entryPath('games', game) })),
   },
   {
     text: t('nav.apps'),
     href: lp('/apps'),
-    links: apps.map((app) => ({ text: app.data.title, href: lp(`/apps/${entryKey(app)}`) })),
+    links: apps.map((app) => ({ text: app.data.title, href: entryPath('apps', app) })),
   },
   // The blog is Korean-only for now, so it stays out of the English nav
   // rather than dropping English readers into Korean posts.
@@ -46,12 +46,12 @@ const footerLinks = [
   {
     title: t('nav.games'),
     href: lp('/games'),
-    links: games.map((game) => ({ text: game.data.title, href: lp(`/games/${entryKey(game)}`) })),
+    links: games.map((game) => ({ text: game.data.title, href: entryPath('games', game) })),
   },
   {
     title: t('nav.apps'),
     href: lp('/apps'),
-    links: apps.map((app) => ({ text: app.data.title, href: lp(`/apps/${entryKey(app)}`) })),
+    links: apps.map((app) => ({ text: app.data.title, href: entryPath('apps', app) })),
   },
   ...(locale === DEFAULT_LOCALE ? [{ title: t('nav.blog'), href: lp('/posts'), links: [] }] : []),
   {

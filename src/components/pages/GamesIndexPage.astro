@@ -2,8 +2,8 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import Image from '~/components/common/Image.astro';
-import { getLocaleFromUrl, localePath, useTranslations } from '~/i18n';
-import { getLocalizedEntries, entryKey } from '~/utils/localizedContent';
+import { getLocaleFromUrl, useTranslations } from '~/i18n';
+import { getLocalizedEntries, entryPath } from '~/utils/localizedContent';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
@@ -23,7 +23,7 @@ const metadata = { title: t('games.title'), description: t('games.subtitle') };
       {
         games.map((game) => (
           <a
-            href={localePath(`/games/${entryKey(game)}`, locale)}
+            href={entryPath('games', game)}
             class="block group rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 transition hover:shadow-[0_8px_40px_rgba(0,0,0,0.15)]"
           >
             {game.data.thumbnail && (

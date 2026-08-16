@@ -2,8 +2,8 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import Features from '~/components/widgets/Features.astro';
-import { getLocaleFromUrl, localePath, useTranslations } from '~/i18n';
-import { getLocalizedEntries, entryKey } from '~/utils/localizedContent';
+import { getLocaleFromUrl, useTranslations } from '~/i18n';
+import { getLocalizedEntries, entryPath } from '~/utils/localizedContent';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
@@ -30,7 +30,7 @@ const metadata = { title: t('apps.title'), description: t('apps.subtitle') };
         : undefined,
       callToAction: {
         text: t('apps.viewDetail'),
-        href: localePath(`/apps/${entryKey(app)}`, locale),
+        href: entryPath('apps', app),
       },
     }))}
   />
