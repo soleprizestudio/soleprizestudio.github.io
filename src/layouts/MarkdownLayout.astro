@@ -1,11 +1,14 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import { DEFAULT_LOCALE, type Locale } from '~/i18n';
 
 import type { MetaData } from '~/types';
 
 export interface Props {
   frontmatter: {
     title?: string;
+    /** Locales this document is available in; pages declare it to opt into hreflang. */
+    locales?: Locale[];
   };
 }
 
@@ -14,9 +17,12 @@ const { frontmatter } = Astro.props;
 const metadata: MetaData = {
   title: frontmatter?.title,
 };
+
+// Most markdown pages are Korean-only; the legal pages declare their pair.
+const locales = frontmatter?.locales ?? [DEFAULT_LOCALE];
 ---
 
-<Layout metadata={metadata} locales={['ko']}>
+<Layout metadata={metadata} locales={locales}>
   <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
     <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter">{frontmatter.title}</h1>
     <div

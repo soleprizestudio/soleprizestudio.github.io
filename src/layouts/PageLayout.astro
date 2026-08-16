@@ -63,12 +63,9 @@ const footerLinks = [
   },
 ];
 
-// The legal pages exist only in Korean and are written under Korean law, so
-// they are deliberately NOT locale-prefixed - /en/terms was a dead link.
-// Label them in the reader's language, but send everyone to the one authoritative copy.
 const footerSecondaryLinks = [
-  { text: t('nav.terms'), href: localePath('/terms', DEFAULT_LOCALE) },
-  { text: t('nav.privacy'), href: localePath('/privacy', DEFAULT_LOCALE) },
+  { text: t('nav.terms'), href: lp('/terms') },
+  { text: t('nav.privacy'), href: lp('/privacy') },
 ];
 ---
 

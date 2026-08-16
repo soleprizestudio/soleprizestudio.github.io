@@ -1,9 +1,12 @@
 ---
 title: '개인정보처리방침'
 layout: '~/layouts/MarkdownLayout.astro'
+locales: ['ko', 'en']
 ---
 
 _(아래는 이 웹사이트(soleprizestudio.github.io) 자체에 대한 기본 초안입니다. 법률 자문은 아니니 실제 서비스에 적용하기 전에 검토해주세요. 각 앱별 개인정보처리방침은 앱이 실제로 수집하는 정보에 맞춰 별도로 작성해서 이 페이지에 링크하거나 섹션을 추가하는 걸 추천드립니다.)_
+
+[English version →](/en/privacy)
 
 **시행일**: 2026년 7월 4일
 

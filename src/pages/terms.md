@@ -1,9 +1,12 @@
 ---
 title: '이용약관'
 layout: '~/layouts/MarkdownLayout.astro'
+locales: ['ko', 'en']
 ---
 
 _(아래는 시작용 기본 초안입니다. 법률 자문은 아니니, 실제 서비스에 적용하기 전에 검토해주세요. 유료 결제나 사용자 계정 기능을 추가하게 되면 관련 조항도 추가해야 합니다.)_
+
+[English version →](/en/terms)
 
 **시행일**: 2026년 7월 4일
 
