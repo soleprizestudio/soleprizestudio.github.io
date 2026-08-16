@@ -1,7 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
-import Image from '~/components/common/Image.astro';
+import Features from '~/components/widgets/Features.astro';
 import { getLocaleFromUrl, useTranslations } from '~/i18n';
 import { getLocalizedEntries, entryPath } from '~/utils/localizedContent';
 
@@ -16,32 +16,22 @@ const metadata = { title: t('games.title'), description: t('games.subtitle') };
 <Layout metadata={metadata}>
   <HeroText tagline="Games" title={t('games.title')} subtitle={t('games.subtitle')} />
 
-  <section class="px-4 pb-16 sm:px-6 mx-auto lg:px-8 lg:pb-20 max-w-6xl">
-    {games.length === 0 && <p>{t('games.empty')}</p>}
+  {games.length === 0 && <p class="text-muted text-center pb-16">{t('games.empty')}</p>}
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {
-        games.map((game) => (
-          <a
-            href={entryPath('games', game)}
-            class="block group rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 transition hover:shadow-[0_8px_40px_rgba(0,0,0,0.15)]"
-          >
-            {game.data.thumbnail && (
-              <Image
-                src={game.data.thumbnail}
-                alt={`${game.data.title} ${t('games.thumbnailAlt')}`}
-                width={64}
-                height={64}
-                densities={[1, 2, 3]}
-                layout="fixed"
-                class="rounded-[22%] shadow-md mb-3"
-              />
-            )}
-            <h3 class="text-xl font-bold group-hover:text-primary">{game.data.title}</h3>
-            <p class="text-muted mt-2">{game.data.teaser}</p>
-          </a>
-        ))
-      }
-    </div>
-  </section>
+  <Features
+    columns={Math.min(2, Math.max(games.length, 1))}
+    classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }}
+    items={games.map((game) => ({
+      title: game.data.title,
+      description: game.data.teaser,
+      icon: 'tabler:device-gamepad-2',
+      image: game.data.thumbnail
+        ? { src: game.data.thumbnail, alt: `${game.data.title} ${t('games.thumbnailAlt')}` }
+        : undefined,
+      callToAction: {
+        text: t('games.viewDetail'),
+        href: entryPath('games', game),
+      },
+    }))}
+  />
 </Layout>

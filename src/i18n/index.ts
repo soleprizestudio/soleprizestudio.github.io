@@ -73,6 +73,7 @@ const ui = {
     'games.empty': '아직 등록된 게임이 없어요 — 곧 올라올 예정입니다!',
     'games.openInNewTab': '새 탭에서 크게 보기',
     'games.thumbnailAlt': '썸네일',
+    'games.viewDetail': '자세히 보기',
 
     'apps.title': '앱',
     'apps.subtitle': 'SolePrize Studio가 만드는 앱을 소개합니다.',
@@ -137,6 +138,7 @@ const ui = {
     'games.empty': 'No games here yet — something is on the way!',
     'games.openInNewTab': 'Open in a new tab',
     'games.thumbnailAlt': 'thumbnail',
+    'games.viewDetail': 'View details',
 
     'apps.title': 'Apps',
     'apps.subtitle': 'Apps made by SolePrize Studio.',

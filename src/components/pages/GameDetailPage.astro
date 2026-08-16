@@ -29,16 +29,18 @@ const metadata = { title: entry.data.title, description: entry.data.teaser };
       <article class="lg:max-w-4xl lg:min-w-0 lg:flex-1">
         <div class="flex items-center gap-4 mb-6">
           {
-            entry.data.thumbnail && (
+            entry.data.thumbnail ? (
               <Image
                 src={entry.data.thumbnail}
                 alt={`${entry.data.title} ${t('games.thumbnailAlt')}`}
-                width={64}
-                height={64}
+                width={96}
+                height={96}
                 densities={[1, 2, 3]}
                 layout="fixed"
                 class="rounded-[22%] shadow-md"
               />
+            ) : (
+              <Icon name="tabler:device-gamepad-2" class="w-12 h-12 text-primary" />
             )
           }
           <h1 class="font-bold font-heading text-2xl md:text-3xl leading-tighter tracking-tighter">
