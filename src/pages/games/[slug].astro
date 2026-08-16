@@ -1,5 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import { Icon } from 'astro-icon/components';
 import TableOfContents from '~/components/blog/TableOfContents.astro';
 import Giscus from '~/components/blog/Giscus.astro';
 import { getCollection, render } from 'astro:content';
@@ -26,8 +27,24 @@ const metadata = { title: game.data.title, description: game.data.teaser };
           {game.data.title}
         </h1>
 
-        <div class="aspect-video w-full mb-8 border border-gray-200 dark:border-slate-600 rounded-lg overflow-hidden">
-          <iframe src={game.data.playPath} class="w-full h-full" title={game.data.title} loading="lazy"></iframe>
+        <div class="aspect-video w-full border border-gray-200 dark:border-slate-600 rounded-lg overflow-hidden">
+          <iframe
+            src={game.data.playPath}
+            class="w-full h-full"
+            title={game.data.title}
+            loading="lazy"
+            allow="accelerometer; gyroscope; fullscreen"></iframe>
+        </div>
+        <div class="mb-8 mt-2 text-right">
+          <a
+            href={game.data.playPath}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-muted hover:text-primary text-sm hover:underline"
+          >
+            <Icon name="tabler:external-link" class="w-4 h-4 inline-block -mt-0.5" />
+            새 탭에서 크게 보기
+          </a>
         </div>
 
         {
