@@ -2,6 +2,7 @@
 title: Board Game Dice
 teaser: Catan, Yahtzee, Farkle, D&D and more — pick your game, get the right dice, roll instantly in your browser.
 playPath: https://soleprizestudio.github.io/board-game-dice/
+thumbnail: ~/assets/images/board-game-dice-icon.png
 draft: false
 lang: en
 translationKey: board-game-dice

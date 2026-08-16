@@ -1,6 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
+import Image from '~/components/common/Image.astro';
 import { getLocaleFromUrl, localePath, useTranslations } from '~/i18n';
 import { getLocalizedEntries, entryKey } from '~/utils/localizedContent';
 
@@ -26,10 +27,14 @@ const metadata = { title: t('games.title'), description: t('games.subtitle') };
             class="block group rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 transition hover:shadow-[0_8px_40px_rgba(0,0,0,0.15)]"
           >
             {game.data.thumbnail && (
-              <img
+              <Image
                 src={game.data.thumbnail}
                 alt={`${game.data.title} ${t('games.thumbnailAlt')}`}
-                class="w-full rounded-lg mb-3"
+                width={64}
+                height={64}
+                densities={[1, 2, 3]}
+                layout="fixed"
+                class="rounded-[22%] shadow-md mb-3"
               />
             )}
             <h3 class="text-xl font-bold group-hover:text-primary">{game.data.title}</h3>

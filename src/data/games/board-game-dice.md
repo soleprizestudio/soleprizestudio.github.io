@@ -2,6 +2,7 @@
 title: 보드게임 주사위
 teaser: 카탄, 야추, 파클부터 D&D까지 — 보드게임별 주사위 구성을 골라 바로 굴리는 웹 주사위입니다.
 playPath: https://soleprizestudio.github.io/board-game-dice/
+thumbnail: ~/assets/images/board-game-dice-icon.png
 draft: false
 ---
 
