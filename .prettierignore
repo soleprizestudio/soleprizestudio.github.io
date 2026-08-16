@@ -9,3 +9,8 @@ public/.well-known
 src/data/posts
 src/data/games
 src/data/apps
+
+# Search engine ownership-verification files - the content is fixed by the
+# search engine and must be served byte-for-byte, so never reformat them
+public/google*.html
+public/naver*.html
