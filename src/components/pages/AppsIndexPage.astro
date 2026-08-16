@@ -1,0 +1,37 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features from '~/components/widgets/Features.astro';
+import { getLocaleFromUrl, localePath, useTranslations } from '~/i18n';
+import { getLocalizedEntries, entryKey } from '~/utils/localizedContent';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const apps = await getLocalizedEntries('apps', locale);
+
+const metadata = { title: t('apps.title'), description: t('apps.subtitle') };
+---
+
+<Layout metadata={metadata}>
+  <HeroText tagline="Apps" title={t('apps.title')} subtitle={t('apps.subtitle')} />
+
+  {apps.length === 0 && <p class="text-muted text-center pb-16">{t('apps.empty')}</p>}
+
+  <Features
+    columns={Math.min(2, Math.max(apps.length, 1))}
+    classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }}
+    items={apps.map((app) => ({
+      title: app.data.title,
+      description: app.data.description,
+      icon: app.data.icon || 'tabler:apps',
+      image: app.data.iconImage
+        ? { src: app.data.iconImage, alt: `${app.data.title} ${t('apps.iconAlt')}` }
+        : undefined,
+      callToAction: {
+        text: t('apps.viewDetail'),
+        href: localePath(`/apps/${entryKey(app)}`, locale),
+      },
+    }))}
+  />
+</Layout>

@@ -90,6 +90,16 @@ const postCollection = defineCollection({
   }),
 });
 
+// Translations live as sibling files (e.g. board-game-dice-en.md) rather than
+// separate folders, so the CMS keeps showing one flat list per collection.
+// `lang` marks which language a file is, and `translationKey` pairs it with its
+// counterpart - that shared key is also what the URL slug is built from, so
+// /games/<key> and /en/games/<key> line up for hreflang.
+const localeFields = () => ({
+  lang: z.enum(['ko', 'en']).optional().default('ko'),
+  translationKey: z.string().optional(),
+});
+
 const gamesCollection = defineCollection({
   loader: glob({ pattern: '*.md', base: 'src/data/games' }),
   schema: z.object({
@@ -99,6 +109,7 @@ const gamesCollection = defineCollection({
     thumbnail: z.string().optional(),
     draft: z.boolean().optional().default(false),
 
+    ...localeFields(),
     ...pageFeatureToggles({ showComments: false }),
   }),
 });
@@ -114,6 +125,7 @@ const appsCollection = defineCollection({
     privacyUrl: z.string().optional(),
     draft: z.boolean().optional().default(false),
 
+    ...localeFields(),
     ...pageFeatureToggles({ showComments: false }),
   }),
 });

@@ -2,63 +2,81 @@
 import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/widgets/Header.astro';
 import Footer from '~/components/widgets/Footer.astro';
-import { getCollection } from 'astro:content';
 
 import { headerData, footerData } from '~/navigation';
-import { getPermalink } from '~/utils/permalinks';
+import { DEFAULT_LOCALE, LOCALES, getLocaleFromUrl, localePath, useTranslations, type Locale } from '~/i18n';
+import { getLocalizedEntries, entryKey } from '~/utils/localizedContent';
 
 import type { MetaData } from '~/types';
 
 export interface Props {
   metadata?: MetaData;
+  locales?: Locale[];
 }
 
-const { metadata } = Astro.props;
+const { metadata, locales = [...LOCALES] } = Astro.props;
 
-const games = await getCollection('games', ({ data }) => !data.draft);
-const apps = await getCollection('apps', ({ data }) => !data.draft);
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const lp = (path: string) => localePath(path, locale);
+
+const games = await getLocalizedEntries('games', locale);
+const apps = await getLocalizedEntries('apps', locale);
 
 const headerLinks = [
-  { text: '홈', href: getPermalink('/') },
+  { text: t('nav.home'), href: lp('/') },
   {
-    text: '게임',
-    href: getPermalink('/games'),
-    links: games.map((game) => ({ text: game.data.title, href: getPermalink(`/games/${game.id}`) })),
+    text: t('nav.games'),
+    href: lp('/games'),
+    links: games.map((game) => ({ text: game.data.title, href: lp(`/games/${entryKey(game)}`) })),
   },
   {
-    text: '앱',
-    href: getPermalink('/apps'),
-    links: apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
+    text: t('nav.apps'),
+    href: lp('/apps'),
+    links: apps.map((app) => ({ text: app.data.title, href: lp(`/apps/${entryKey(app)}`) })),
   },
-  { text: '블로그', href: getPermalink('/posts') },
-  { text: '소개', href: getPermalink('/about') },
-  { text: '문의', href: getPermalink('/contact') },
+  // The blog is Korean-only for now, so it stays out of the English nav
+  // rather than dropping English readers into Korean posts.
+  ...(locale === DEFAULT_LOCALE ? [{ text: t('nav.blog'), href: lp('/posts') }] : []),
+  { text: t('nav.about'), href: lp('/about') },
+  { text: t('nav.contact'), href: lp('/contact') },
 ];
 
 const footerLinks = [
   {
-    title: '게임',
-    href: getPermalink('/games'),
-    links: games.map((game) => ({ text: game.data.title, href: getPermalink(`/games/${game.id}`) })),
+    title: t('nav.games'),
+    href: lp('/games'),
+    links: games.map((game) => ({ text: game.data.title, href: lp(`/games/${entryKey(game)}`) })),
   },
   {
-    title: '앱',
-    href: getPermalink('/apps'),
-    links: apps.map((app) => ({ text: app.data.title, href: getPermalink(`/apps/${app.id}`) })),
+    title: t('nav.apps'),
+    href: lp('/apps'),
+    links: apps.map((app) => ({ text: app.data.title, href: lp(`/apps/${entryKey(app)}`) })),
   },
-  { title: '블로그', href: getPermalink('/posts'), links: [] },
-  ...footerData.links,
+  ...(locale === DEFAULT_LOCALE ? [{ title: t('nav.blog'), href: lp('/posts'), links: [] }] : []),
+  {
+    title: 'SolePrize Studio',
+    links: [
+      { text: t('nav.about'), href: lp('/about') },
+      { text: t('nav.contact'), href: lp('/contact') },
+    ],
+  },
+];
+
+const footerSecondaryLinks = [
+  { text: t('nav.terms'), href: lp('/terms') },
+  { text: t('nav.privacy'), href: lp('/privacy') },
 ];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} locales={locales}>
   <slot name="header">
-    <Header {...headerData} links={headerLinks} isSticky showToggleTheme />
+    <Header {...headerData} links={headerLinks} isSticky showToggleTheme showLanguageSwitcher />
   </slot>
   <main>
     <slot />
   </main>
   <slot name="footer">
-    <Footer {...footerData} links={footerLinks} />
+    <Footer {...footerData} links={footerLinks} secondaryLinks={footerSecondaryLinks} />
   </slot>
 </Layout>

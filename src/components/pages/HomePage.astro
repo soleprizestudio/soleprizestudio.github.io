@@ -1,0 +1,61 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getLocaleFromUrl, localePath, useTranslations } from '~/i18n';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const lp = (path: string) => localePath(path, locale);
+
+const metadata = {
+  title: 'SolePrize Studio',
+  description: t('home.subtitle'),
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    actions={[
+      { variant: 'primary', text: t('home.viewGames'), href: lp('/games') },
+      { text: t('home.viewApps'), href: lp('/apps') },
+    ]}
+  >
+    <Fragment slot="title">SolePrize Studio</Fragment>
+    <Fragment slot="subtitle">{t('home.subtitle')}</Fragment>
+  </Hero>
+
+  <Features2
+    title={t('home.whatIMake')}
+    tagline="Studio"
+    columns={3}
+    classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }}
+    items={[
+      {
+        title: t('nav.games'),
+        description: t('home.games.desc'),
+        icon: 'tabler:device-gamepad-2',
+        callToAction: { text: t('home.seeGames'), href: lp('/games') },
+      },
+      {
+        title: t('nav.apps'),
+        description: t('home.apps.desc'),
+        icon: 'tabler:apps',
+        callToAction: { text: t('home.seeApps'), href: lp('/apps') },
+      },
+      {
+        title: t('nav.about'),
+        description: t('home.about.desc'),
+        icon: 'tabler:info-circle',
+        callToAction: { text: t('home.seeAbout'), href: lp('/about') },
+      },
+    ]}
+  />
+
+  <CallToAction actions={[{ variant: 'primary', text: t('home.cta.action'), href: lp('/contact') }]}>
+    <Fragment slot="title">{t('home.cta.title')}</Fragment>
+    <Fragment slot="subtitle">{t('home.cta.subtitle')}</Fragment>
+  </CallToAction>
+</Layout>

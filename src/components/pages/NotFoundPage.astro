@@ -1,0 +1,23 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { getLocaleFromUrl, localePath, useTranslations } from '~/i18n';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<Layout metadata={{ title: '404' }} locales={[locale]}>
+  <section class="flex items-center h-full p-16">
+    <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
+      <div class="max-w-md text-center">
+        <h2 class="mb-8 font-bold text-9xl">
+          <span class="sr-only">Error</span>
+          <span class="text-primary">404</span>
+        </h2>
+        <p class="text-3xl font-semibold md:text-3xl">{t('notFound.title')}</p>
+        <p class="mt-4 mb-8 text-lg text-muted dark:text-slate-400">{t('notFound.body')}</p>
+        <a rel="noopener noreferrer" href={localePath('/', locale)} class="btn ml-4">{t('notFound.home')}</a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -7,6 +7,7 @@ import Button from '~/components/ui/Button.astro';
 
 import { getHomePermalink } from '~/utils/permalinks';
 import { trimSlash, getAsset } from '~/utils/permalinks';
+import { LOCALE_LABELS, LOCALES, getLocaleFromUrl, localePath, stripLocale } from '~/i18n';
 import type { CallToAction } from '~/types';
 
 interface Link {
@@ -29,6 +30,7 @@ export interface Props {
   isFullWidth?: boolean;
   showToggleTheme?: boolean;
   showRssFeed?: boolean;
+  showLanguageSwitcher?: boolean;
   position?: string;
 }
 
@@ -41,10 +43,23 @@ const {
   isFullWidth = false,
   showToggleTheme = false,
   showRssFeed = false,
+  showLanguageSwitcher = false,
   position = 'center',
 } = Astro.props;
 
 const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
+
+const activeLocale = getLocaleFromUrl(Astro.url);
+const basePath = stripLocale(Astro.url.pathname);
+// Keeps the reader on the same page when they switch language, instead of
+// bouncing them to the localized home page.
+const localeOptions = LOCALES.map((code) => ({
+  code,
+  label: LOCALE_LABELS[code],
+  short: code.toUpperCase(),
+  href: localePath(basePath, code),
+  isActive: code === activeLocale,
+}));
 ---
 
 <header
@@ -139,7 +154,33 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       ]}
     >
       <div class="items-center flex justify-between w-full md:w-auto">
-        <div class="flex">
+        <div class="flex items-center">
+          {
+            showLanguageSwitcher && (
+              <div class="flex items-center mr-1 text-sm">
+                {localeOptions.map(({ code, label, short, href, isActive }, index) => (
+                  <>
+                    {index > 0 && <span class="text-muted mx-1">/</span>}
+                    {isActive ? (
+                      <span class="text-primary font-semibold px-1" aria-current="true" lang={code}>
+                        {short}
+                      </span>
+                    ) : (
+                      <a
+                        href={href}
+                        class="text-muted hover:text-primary px-1"
+                        hreflang={code}
+                        lang={code}
+                        title={label}
+                      >
+                        {short}
+                      </a>
+                    )}
+                  </>
+                ))}
+              </div>
+            )
+          }
           {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 md:w-5 md:h-5 md:inline-block" />}
           {
             showRssFeed && (

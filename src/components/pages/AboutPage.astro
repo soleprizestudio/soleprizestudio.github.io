@@ -1,0 +1,56 @@
+---
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { getLocaleFromUrl, localePath, useTranslations } from '~/i18n';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const contactHref = localePath('/contact', locale);
+
+const metadata = { title: t('about.title'), description: t('about.subtitle') };
+
+const items =
+  locale === 'en'
+    ? [
+        {
+          title: 'Who I am',
+          description:
+            'Hello — I go by 평발 (Pyeongbal), a shortening of "평범한 개발자", meaning "an ordinary developer". I have a day job, and I build apps and games in my spare time because I enjoy it. SolePrize Studio is the name I put on that work.',
+        },
+        {
+          title: 'What I make',
+          description:
+            'Apps that make some small part of a day a little easier, and games you can enjoy without any pressure. Nothing flashy — the goal is simply to keep finishing things, one at a time.',
+        },
+        {
+          title: 'Get in touch',
+          description: `If you have a question or an idea you'd like to suggest, please reach out through the <a href="${contactHref}" class="text-primary font-medium hover:underline">contact page</a>.`,
+        },
+      ]
+    : [
+        {
+          title: '누구인가요',
+          description:
+            "안녕하세요, '평범한 개발자'를 줄여 평발이라는 닉네임을 쓰고 있습니다. 본업이 따로 있고, 취미로 앱과 게임 만드는 걸 좋아해서 SolePrize Studio라는 이름을 붙여 혼자 하나씩 만들어가고 있습니다.",
+        },
+        {
+          title: '무엇을 만드나요',
+          description:
+            '일상에서 조금이라도 도움이 될 만한 앱과, 부담 없이 즐길 수 있는 게임을 만듭니다. 화려하진 않아도 꾸준히, 하나씩 완성해 나가는 것을 목표로 하고 있습니다.',
+        },
+        {
+          title: '문의',
+          description: `궁금한 점이나 제안하고 싶은 아이디어가 있다면 <a href="${contactHref}" class="text-primary font-medium hover:underline">문의 페이지</a>로 편하게 연락 주세요.`,
+        },
+      ];
+---
+
+<Layout metadata={metadata}>
+  <Hero tagline="About">
+    <Fragment slot="title">{t('about.title')}</Fragment>
+    <Fragment slot="subtitle">{t('about.subtitle')}</Fragment>
+  </Hero>
+
+  <Content title="SolePrize Studio" isAfterContent={true} items={items} />
+</Layout>

@@ -1,0 +1,54 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import ContactUs from '~/components/widgets/Contact.astro';
+import { getCanonical } from '~/utils/permalinks';
+import { getLocaleFromUrl, localePath, useTranslations } from '~/i18n';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+// Web3Forms(https://web3forms.com)로 폼을 연결합니다.
+// 1. web3forms.com에서 이메일로 access key를 받아서
+// 2. 아래 WEB3FORMS_ACCESS_KEY 값을 교체해주세요. (공개돼도 안전한 키입니다)
+const WEB3FORMS_ACCESS_KEY = '4cf05ae7-d861-4a9a-8589-9ebf1f73a1bb';
+
+const contactPath = localePath('/contact', locale);
+const sent = Astro.url.searchParams.get('sent') === '1';
+
+const metadata = { title: t('contact.title') };
+---
+
+<Layout metadata={metadata}>
+  <HeroText tagline="Contact" title={t('contact.title')} />
+
+  {
+    sent && (
+      <div class="max-w-xl mx-auto mb-6 px-4">
+        <div class="rounded-lg border border-green-300 bg-green-50 dark:bg-green-900/30 dark:border-green-700 text-green-800 dark:text-green-200 p-4 text-center">
+          {t('contact.sent')}
+        </div>
+      </div>
+    )
+  }
+
+  <ContactUs
+    id="form"
+    classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }}
+    title={t('contact.formTitle')}
+    subtitle={t('contact.emailNote')}
+    action="https://api.web3forms.com/submit"
+    hiddenFields={[
+      { name: 'access_key', value: WEB3FORMS_ACCESS_KEY },
+      { name: 'subject', value: t('contact.subject') },
+      { name: 'redirect', value: `${getCanonical(contactPath)}?sent=1` },
+    ]}
+    honeypot={true}
+    inputs={[
+      { type: 'text', name: 'name', label: t('contact.name') },
+      { type: 'email', name: 'email', label: t('contact.email') },
+    ]}
+    textarea={{ label: t('contact.message') }}
+    disclaimer={{ label: t('contact.disclaimer') }}
+  />
+</Layout>

@@ -15,18 +15,30 @@ import BasicScripts from '~/components/common/BasicScripts.astro';
 // Comment the line below to disable View Transitions
 import { ClientRouter } from 'astro:transitions';
 
+import { DEFAULT_LOCALE, LOCALE_TAGS, LOCALES, getLocaleFromUrl, localePath, stripLocale, type Locale } from '~/i18n';
+import { getCanonical } from '~/utils/permalinks';
+
 import type { MetaData as MetaDataType } from '~/types';
 
 export interface Props {
   metadata?: MetaDataType;
+  /** Locales this page actually exists in - drives hreflang. Korean-only pages (blog) pass ['ko']. */
+  locales?: Locale[];
 }
 
-const { metadata = {} } = Astro.props;
-const { language, textDirection } = I18N;
+const { metadata = {}, locales = [...LOCALES] } = Astro.props;
+const { textDirection } = I18N;
+
+const locale = getLocaleFromUrl(Astro.url);
+const basePath = stripLocale(Astro.url.pathname);
+
+// Only worth pairing when the page genuinely exists in more than one language;
+// a lone hreflang pointing at itself is noise.
+const alternates = locales.length > 1 ? locales : [];
 ---
 
 <!doctype html>
-<html lang={language} dir={textDirection}>
+<html lang={LOCALE_TAGS[locale]} dir={textDirection}>
   <head>
     <CommonMeta />
     <Favicons />
@@ -35,6 +47,17 @@ const { language, textDirection } = I18N;
     <Metadata {...metadata} />
     <SiteVerification />
     <Analytics />
+
+    {
+      alternates.map((alt) => (
+        <link rel="alternate" hreflang={LOCALE_TAGS[alt]} href={getCanonical(localePath(basePath, alt))} />
+      ))
+    }
+    {
+      alternates.length > 0 && (
+        <link rel="alternate" hreflang="x-default" href={getCanonical(localePath(basePath, DEFAULT_LOCALE))} />
+      )
+    }
 
     <link rel="preconnect" href="https://images.unsplash.com" />
 

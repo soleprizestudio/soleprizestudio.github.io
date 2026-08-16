@@ -3,7 +3,7 @@ import AppDetailPage from '~/components/pages/AppDetailPage.astro';
 import { getLocalizedStaticPaths, getAvailableLocales } from '~/utils/localizedContent';
 
 export async function getStaticPaths() {
-  return await getLocalizedStaticPaths('apps', 'ko');
+  return await getLocalizedStaticPaths('apps', 'en');
 }
 
 const { entry } = Astro.props;
