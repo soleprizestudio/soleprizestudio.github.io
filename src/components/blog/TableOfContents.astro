@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import type { MarkdownHeading } from 'astro';
+import { getLocaleFromUrl, useTranslations } from '~/i18n';
 
 export interface Props {
   headings?: MarkdownHeading[];
@@ -12,11 +13,18 @@ export interface Props {
 const { headings = [], class: className = '', variant = 'desktop', showCommentsAction = true } = Astro.props;
 const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
 const actions = [
-  { action: 'top', icon: 'tabler:arrow-up', text: '맨 위로' },
-  ...(showCommentsAction ? [{ action: 'comments', icon: 'tabler:message-circle', text: '댓글로 이동' }] : []),
-  { action: 'copy', icon: 'tabler:link', text: '링크 복사' },
+  { action: 'top', icon: 'tabler:arrow-up', text: t('toc.top') },
+  ...(showCommentsAction ? [{ action: 'comments', icon: 'tabler:message-circle', text: t('toc.comments') }] : []),
+  { action: 'copy', icon: 'tabler:link', text: t('toc.copy') },
 ] as const;
+
+// The copy button swaps its own label on click. That runs client-side, where
+// the dictionary isn't available, so both strings ride along on the element.
+const copyLabels = { idle: t('toc.copy'), done: t('toc.copied') };
 ---
 
 {
@@ -30,7 +38,7 @@ const actions = [
     >
       {variant === 'mobile' ? (
         <details class="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-3">
-          <summary class="cursor-pointer font-medium">목차</summary>
+          <summary class="cursor-pointer font-medium">{t('toc.title')}</summary>
           <nav class="mt-3">
             {items.length > 0 ? (
               <ul class="space-y-2">
@@ -43,7 +51,7 @@ const actions = [
                 ))}
               </ul>
             ) : (
-              <p class="text-muted">목차가 없습니다.</p>
+              <p class="text-muted">{t('toc.empty')}</p>
             )}
           </nav>
           <div class="mt-4 flex flex-col gap-2 border-t dark:border-slate-700 pt-3">
@@ -54,7 +62,13 @@ const actions = [
                 class="flex items-center gap-2 text-muted hover:text-primary text-left"
               >
                 <Icon name={icon} class="w-4 h-4" />
-                <span data-toc-label={action === 'copy' ? '' : undefined}>{text}</span>
+                <span
+                  data-toc-label={action === 'copy' ? '' : undefined}
+                  data-toc-copy-idle={action === 'copy' ? copyLabels.idle : undefined}
+                  data-toc-copy-done={action === 'copy' ? copyLabels.done : undefined}
+                >
+                  {text}
+                </span>
               </button>
             ))}
           </div>
@@ -63,7 +77,7 @@ const actions = [
         <div class="w-full py-6">
           {items.length > 0 && (
             <>
-              <p class="font-medium mb-3">목차</p>
+              <p class="font-medium mb-3">{t('toc.title')}</p>
               <nav>
                 <ul class="space-y-2 border-l dark:border-slate-700">
                   {items.map((h) => (
@@ -88,7 +102,13 @@ const actions = [
                 class="flex items-center gap-2 text-muted hover:text-primary text-left"
               >
                 <Icon name={icon} class="w-4 h-4" />
-                <span data-toc-label={action === 'copy' ? '' : undefined}>{text}</span>
+                <span
+                  data-toc-label={action === 'copy' ? '' : undefined}
+                  data-toc-copy-idle={action === 'copy' ? copyLabels.idle : undefined}
+                  data-toc-copy-done={action === 'copy' ? copyLabels.done : undefined}
+                >
+                  {text}
+                </span>
               </button>
             ))}
           </div>
@@ -99,9 +119,6 @@ const actions = [
 }
 
 <script>
-  const COPY_LABEL = '링크 복사';
-  const COPIED_LABEL = '복사됨!';
-
   const boundButtons = new WeakSet<Element>();
 
   function initTocActions() {
@@ -120,11 +137,12 @@ const actions = [
           navigator.clipboard
             .writeText(window.location.href)
             .then(() => {
-              const label = button.querySelector('[data-toc-label]');
+              const label = button.querySelector<HTMLElement>('[data-toc-label]');
               if (!label) return;
-              label.textContent = COPIED_LABEL;
+              const idle = label.dataset.tocCopyIdle ?? label.textContent ?? '';
+              label.textContent = label.dataset.tocCopyDone ?? idle;
               setTimeout(() => {
-                label.textContent = COPY_LABEL;
+                label.textContent = idle;
               }, 1500);
             })
             .catch(() => {});

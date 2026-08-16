@@ -99,6 +99,13 @@ const ui = {
     'notFound.body': '주소가 바뀌었거나 삭제된 페이지일 수 있습니다.',
     'notFound.home': '홈으로 돌아가기',
 
+    'toc.title': '목차',
+    'toc.empty': '목차가 없습니다.',
+    'toc.top': '맨 위로',
+    'toc.comments': '댓글로 이동',
+    'toc.copy': '링크 복사',
+    'toc.copied': '복사됨!',
+
     'lang.switchTo': 'English로 보기',
   },
   en: {
@@ -155,6 +162,13 @@ const ui = {
     'notFound.title': 'Page not found',
     'notFound.body': 'The address may have changed, or the page may have been removed.',
     'notFound.home': 'Back to home',
+
+    'toc.title': 'Contents',
+    'toc.empty': 'No headings on this page.',
+    'toc.top': 'Back to top',
+    'toc.comments': 'Jump to comments',
+    'toc.copy': 'Copy link',
+    'toc.copied': 'Copied!',
 
     'lang.switchTo': '한국어로 보기',
   },

@@ -1,8 +1,11 @@
 ---
+import { LOCALE_TAGS, getLocaleFromUrl } from '~/i18n';
 
+// Giscus ships its own UI copy, so hand it the page's language.
+const giscusLang = LOCALE_TAGS[getLocaleFromUrl(Astro.url)];
 ---
 
-<div class="giscus not-prose"></div>
+<div class="giscus not-prose" data-giscus-lang={giscusLang}></div>
 
 <script>
   const GISCUS_CONFIG = {
@@ -15,7 +18,6 @@
     'data-reactions-enabled': '1',
     'data-emit-metadata': '0',
     'data-input-position': 'bottom',
-    'data-lang': 'ko',
   };
 
   function currentGiscusTheme() {
@@ -46,6 +48,7 @@
       script.async = true;
       Object.entries(GISCUS_CONFIG).forEach(([key, value]) => script.setAttribute(key, value));
       script.setAttribute('data-theme', currentGiscusTheme());
+      script.setAttribute('data-lang', container.dataset.giscusLang || 'ko');
       container.appendChild(script);
     });
   }
