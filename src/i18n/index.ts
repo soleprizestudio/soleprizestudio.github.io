@@ -71,7 +71,7 @@ const ui = {
     'home.cta.action': '문의하기',
 
     'games.title': '게임',
-    'games.subtitle': '부담 없이 즐길 수 있는 게임',
+    'games.subtitle': '브라우저에서 바로 즐길 수 있는 게임',
     'games.empty': '아직 등록된 게임이 없어요 — 곧 올라올 예정입니다!',
     'games.openInNewTab': '새 탭에서 크게 보기',
     'games.thumbnailAlt': '썸네일',
@@ -138,7 +138,7 @@ const ui = {
     'home.cta.action': 'Get in touch',
 
     'games.title': 'Games',
-    'games.subtitle': 'Games you can pick up and enjoy',
+    'games.subtitle': 'Games you can play right in the browser',
     'games.empty': 'No games here yet — something is on the way!',
     'games.openInNewTab': 'Open in a new tab',
     'games.thumbnailAlt': 'thumbnail',

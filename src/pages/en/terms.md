@@ -4,7 +4,7 @@ layout: '~/layouts/MarkdownLayout.astro'
 locales: ['ko', 'en']
 ---
 
-_(This page is an AI-generated English translation provided for convenience. The [Korean version](/terms) is the authoritative text — where the two differ, the Korean version governs. This is a starter draft rather than legal advice; please have it reviewed before relying on it. Clauses covering paid purchases or user accounts would need to be added if those features are introduced.)_
+_(This page is an AI-generated English translation provided for convenience. The [Korean version](/terms) is the authoritative text — where the two differ, the Korean version governs.)_
 
 **Effective date**: 4 July 2026
 
