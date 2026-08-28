@@ -17,10 +17,12 @@ import astrowind from './vendor/integration';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter';
 import { buildInternalLinkIndex, internalLinkEmbedRehypePlugin } from './src/utils/linkEmbeds';
+import { generateOgCards } from './src/utils/ogCards';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const internalLinkIndex = await buildInternalLinkIndex(__dirname);
+await generateOgCards(__dirname);
 
 const hasExternalScripts = true;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>

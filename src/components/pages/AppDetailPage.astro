@@ -20,7 +20,15 @@ const t = useTranslations(locale);
 
 const { Content, headings } = await render(entry);
 
-const metadata = { title: entry.data.title, description: entry.data.description };
+const ogKey = entry.data.translationKey || entry.id;
+const metadata = {
+  title: entry.data.title,
+  description: entry.data.description,
+  // generateOgCards (astro.config.ts) composes this card for every entry with an icon
+  ...(entry.data.iconImage
+    ? { openGraph: { images: [{ url: `/og/apps-${ogKey}.jpg`, width: 1200, height: 630 }] } }
+    : {}),
+};
 ---
 
 <Layout metadata={metadata} locales={availableLocales}>

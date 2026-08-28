@@ -61,6 +61,16 @@ export const adaptOpenGraphImages = async (
       const resolved = await findImage(image.url);
       if (!resolved) return { url: '' };
 
+      // Pre-sized files served from public/ (e.g. generated OG cards) can't go
+      // through astro:assets - absolutize and pass them through unchanged.
+      if (typeof resolved === 'string') {
+        return {
+          url: String(new URL(resolved, astroSite)),
+          width: image.width ?? OG_WIDTH,
+          height: image.height ?? OG_HEIGHT,
+        };
+      }
+
       // Generate an optimized JPG via Astro's image service (Sharp by default).
       const optimized = await getImage({
         src: resolved,

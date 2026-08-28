@@ -5,6 +5,9 @@ dist/
 # generated at build time by src/utils/linkEmbeds.ts, derived from src/assets/images
 public/embed-icons/
 
+# generated at build time by src/utils/ogCards.ts (social share cards)
+public/og/
+
 # dependencies
 node_modules/
 
