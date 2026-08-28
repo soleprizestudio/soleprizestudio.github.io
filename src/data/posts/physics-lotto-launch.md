@@ -36,4 +36,6 @@ https://soleprizestudio.github.io/physics-lotto/
 
 재미로 즐기는 시뮬레이터이며, 실제 당첨 확률과는 아무 관계가 없습니다. 그래도 결과만 받는 것보다 공이 섞이는 걸 지켜보다 하나씩 올라오는 걸 보는 쪽이 확실히 더 즐겁습니다.
 
-[앱 소개 페이지](/apps/physics-lotto)에서 기능을 더 볼 수 있습니다.
+자세한 기능은 앱 소개 페이지에 정리해두었습니다.
+
+[Physics Lotto](/apps/physics-lotto)
