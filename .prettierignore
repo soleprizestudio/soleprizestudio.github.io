@@ -14,3 +14,8 @@ src/data/apps
 # search engine and must be served byte-for-byte, so never reformat them
 public/google*.html
 public/naver*.html
+
+# Web app build artifacts, pushed here by each app repo's own CI - generated
+# code, never hand-formatted
+public/board-game-dice
+public/physics-lotto

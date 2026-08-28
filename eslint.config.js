@@ -61,6 +61,15 @@ export default [
     },
   },
   {
-    ignores: ['dist', 'node_modules', '.github', 'types.generated.d.ts', '.astro'],
+    ignores: [
+      'dist',
+      'node_modules',
+      '.github',
+      'types.generated.d.ts',
+      '.astro',
+      // Web app build artifacts, pushed here by each app repo's own CI
+      'public/board-game-dice',
+      'public/physics-lotto',
+    ],
   },
 ];
