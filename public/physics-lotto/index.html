@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physics Lotto — Real-Physics Lottery Number Machine</title>
+  <meta name="description" content="Physics Lotto — 물리 로또 추첨기. 바람으로 섞고 구멍으로 하나씩 뽑는 진짜 물리 시뮬레이션 로또 번호 추첨기입니다. A real-physics 3D lottery machine: 45 games across 34 countries, 20 languages." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Physics Lotto — Real-Physics Lottery Number Machine" />
+  <meta property="og:description" content="Air-mixed, physics-simulated lottery draws for 34 countries. 바람으로 섞고 구멍으로 뽑는 물리 기반 로또 추첨기." />
+  <meta property="og:site_name" content="Physics Lotto" />
+  <meta property="og:image" content="https://soleprizestudio.github.io/physics-lotto/icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="./icon.png" />
+  <link rel="apple-touch-icon" href="./icon.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Physics Lotto",
+    "description": "Physics-based 3D lottery number machine with rules for 45 games across 34 countries, available in 20 languages.",
+    "applicationCategory": "Game",
+    "operatingSystem": "Web browser",
+    "inLanguage": ["ko","en","ja","zh-CN","zh-TW","vi","es","fr","de","it","pt","ru","tr","nl","pl","sv","el","he","ms"]
+  }
+  </script>
+  <script type="module" crossorigin src="./assets/index-BgmjsQ-x.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-11-lcox6.css">
+</head>
+<body>
+  <div id="app"></div>
+  <noscript>
+    <h1>Physics Lotto — 물리 로또 추첨기</h1>
+    <p>바람으로 공을 섞고 상단 구멍으로 하나씩 뽑는, 진짜 물리 시뮬레이션으로 돌아가는 3D 로또 번호 추첨기입니다.
+    한국 로또 6/45, 미국 파워볼·메가밀리언, 유로밀리언 등 34개국 45개 게임 규칙과 20개 언어를 지원합니다.
+    Physics Lotto is a real-physics 3D lottery number machine — air-mixed, one ball drawn at a time.
+    이 앱을 사용하려면 JavaScript를 켜 주세요.</p>
+  </noscript>
+
+  <div id="loading"><div class="spinner"></div><div data-i18n="loading">Preparing the machine…</div></div>
+
+  <header id="topbar">
+    <div class="brand">
+      <div class="logo">⚪</div>
+      <div>
+        <div class="title" data-i18n="title">PHYSICS LOTTO</div>
+        <div class="sub" data-i18n="sub"></div>
+      </div>
+    </div>
+    <div class="game-picker">
+      <div class="picker-row">
+        <div class="picker-col">
+          <label for="gameSelect" data-i18n="picker">Country / Game</label>
+          <select id="gameSelect"></select>
+        </div>
+        <div class="picker-col lang-col">
+          <label for="langSelect" data-i18n="language">Language</label>
+          <select id="langSelect"></select>
+        </div>
+      </div>
+      <div id="gameInfo" class="game-info"></div>
+    </div>
+  </header>
+
+  <div id="histBackdrop" hidden></div>
+  <div id="histCoach" hidden><span id="histCoachText"></span></div>
+  <aside id="historyPanel" hidden>
+    <div class="hist-head">
+      <span id="histTitle">History</span>
+      <span class="hist-actions">
+        <button id="btnSavePng" class="btn mini" disabled>Save PNG</button>
+        <button id="btnHistClose" class="h-close" aria-label="close">✕</button>
+      </span>
+    </div>
+    <ul id="histList"></ul>
+  </aside>
+
+  <footer id="bottombar">
+    <div id="statusWrap"><div id="status" class="status"></div></div>
+    <div id="results" class="results"></div>
+    <div id="summary" class="summary"></div>
+    <div class="controls">
+      <button id="btnDraw" class="btn primary" data-i18n="start">Start Draw</button>
+      <button id="btnReset" class="btn" data-i18n="reset">Reset</button>
+      <button id="btnSpeed" class="btn ghost" title="speed">1×</button>
+      <button id="btnSound" class="btn ghost" title="sound">🔊</button>
+      <button id="btnHistory" class="btn ghost" title="history">🧾<span id="histBadge" class="badge" hidden></span></button>
+    </div>
+  </footer>
+
+</body>
+</html>
