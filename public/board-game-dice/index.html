@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Board Game Dice</title>
+    <meta name="description" content="Physics-based 3D dice tray for tabletop games. d4–d20, 21 game templates, statistically verified fairness." />
+    <meta name="theme-color" content="#16332a" />
+    <link rel="icon" type="image/svg+xml" href="/board-game-dice/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/board-game-dice/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/board-game-dice/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/board-game-dice/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Dice" />
+    <script type="module" crossorigin src="/board-game-dice/assets/index-DF88Vk78.js"></script>
+    <link rel="stylesheet" crossorigin href="/board-game-dice/assets/index-DPsFtjAo.css">
+  </head>
+  <body>
+    <div id="loading" data-i18n="loading">Setting up the dice tray…</div>
+    <canvas id="scene"></canvas>
+
+    <div class="plaque" id="panel">
+      <div id="panelHead">
+        <h1 data-i18n="appTitle">Board Game Dice</h1>
+        <div id="panelHeadRight">
+          <div id="langToggle" role="group" aria-label="Language">
+            <button data-lang="en" title="English">EN</button>
+            <button data-lang="ko" title="한국어">KO</button>
+          </div>
+          <button id="panelToggle" data-i18n-aria="panelToggleAria">▾</button>
+        </div>
+      </div>
+      <div id="panelBody">
+        <div id="loginRow">
+          <span id="loginStatus"></span>
+          <button id="loginBtn"></button>
+        </div>
+
+        <div class="sectionLabel" data-i18n="sectionGames">Game</div>
+        <div id="tplList"></div>
+        <button id="newTplBtn" data-i18n="newTemplate">+ New template</button>
+
+        <div class="sectionLabel" data-i18n="sectionHistory">History</div>
+        <div id="historyList"></div>
+
+        <div id="shakeRow">
+          <button id="shakeBtn"></button>
+          <span id="shakeStatus"></span>
+        </div>
+
+        <p id="legalNotice" data-i18n="trademarkNotice"></p>
+      </div>
+    </div>
+
+    <div class="plaque" id="bottomBar">
+      <div id="scoreboard">
+        <div class="label" data-i18n="total">Total</div>
+        <div class="sum" id="sumVal">–</div>
+        <div id="faces"></div>
+        <div id="faceGroups"></div>
+        <div id="scoreboardActions">
+          <button id="releaseHoldBtn" data-i18n="releaseHolds">Release holds</button>
+          <button id="resetRoundBtn" data-i18n="resetRound">Reset round</button>
+        </div>
+      </div>
+      <div id="rollArea">
+        <button id="rollBtn" data-i18n="roll">Roll</button>
+        <div id="status"></div>
+      </div>
+    </div>
+
+    <!-- Template editor: modal so it never depends on panel height / scroll -->
+    <div id="tplModal" hidden>
+      <div id="tplModalBackdrop"></div>
+      <div id="newTplForm" class="plaque" role="dialog" aria-modal="true" aria-labelledby="tplFormTitle">
+        <div class="tplFormHead">
+          <div id="tplFormTitle" class="tplFormTitle"></div>
+          <button id="closeTplBtn" type="button" aria-label="Close">✕</button>
+        </div>
+        <div class="tplFormBody">
+          <label>
+            <span data-i18n="tplName">Name</span>
+            <input type="text" id="tplName" data-i18n-placeholder="tplNamePlaceholder" />
+          </label>
+          <label>
+            <span data-i18n="tplCount">Number of dice (1–12)</span>
+            <input type="number" id="tplCount" min="1" max="12" value="2" />
+          </label>
+          <label>
+            <span data-i18n="tplSides">Sides</span>
+            <div class="sideOpts" id="tplSides"></div>
+          </label>
+          <label>
+            <span data-i18n="tplColor">Color</span>
+            <div class="swatches" id="tplSwatches"></div>
+          </label>
+          <div class="tplOptions">
+            <span class="tplOptionsLabel" data-i18n="tplOptions">Options</span>
+            <label class="optRow">
+              <input type="checkbox" id="tplHoldable" checked />
+              <span>
+                <span data-i18n="tplHoldable">Hold dice between rolls</span>
+                <small data-i18n="tplHoldableHint"></small>
+              </span>
+            </label>
+            <label class="optRow">
+              <input type="checkbox" id="tplExcludable" />
+              <span>
+                <span data-i18n="tplExcludable">Exclude same-value groups</span>
+                <small data-i18n="tplExcludableHint"></small>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="tplFormActions">
+          <button id="cancelTplBtn" type="button" data-i18n="cancel">Cancel</button>
+          <button id="saveTplBtn" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
