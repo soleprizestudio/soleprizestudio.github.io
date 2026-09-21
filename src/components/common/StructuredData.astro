@@ -1,0 +1,15 @@
+---
+export interface Props {
+  /** One schema.org node, or several to emit side by side. */
+  schema: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { schema } = Astro.props;
+const nodes = Array.isArray(schema) ? schema : [schema];
+
+// Escaping `<` keeps a stray "</script>" inside any string value from closing
+// the tag early.
+const serialize = (node: Record<string, unknown>) => JSON.stringify(node).replace(/</g, '\\u003c');
+---
+
+{nodes.map((node) => <script type="application/ld+json" is:inline set:html={serialize(node)} />)}

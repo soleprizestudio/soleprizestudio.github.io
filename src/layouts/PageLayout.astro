@@ -12,9 +12,11 @@ import type { MetaData } from '~/types';
 export interface Props {
   metadata?: MetaData;
   locales?: Locale[];
+  /** schema.org node(s) for this page, emitted as JSON-LD. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { metadata, locales = [...LOCALES] } = Astro.props;
+const { metadata, locales = [...LOCALES], jsonLd } = Astro.props;
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
@@ -69,7 +71,7 @@ const footerSecondaryLinks = [
 ];
 ---
 
-<Layout metadata={metadata} locales={locales}>
+<Layout metadata={metadata} locales={locales} jsonLd={jsonLd}>
   <slot name="header">
     <Header {...headerData} links={headerLinks} isSticky showToggleTheme showLanguageSwitcher />
   </slot>

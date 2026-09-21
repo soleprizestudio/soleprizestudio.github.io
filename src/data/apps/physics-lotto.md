@@ -2,6 +2,8 @@
 title: Physics Lotto
 description: 바람으로 섞고 구멍으로 하나씩 뽑는 3D 물리 로또 추첨기 — 34개국 45개 게임을 설치 없이 브라우저에서 돌립니다.
 iconImage: ~/assets/images/physics-lotto-icon.png
+liveUrl: /physics-lotto/
+appCategory: EntertainmentApplication
 showToc: true
 showComments: false
 ---

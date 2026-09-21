@@ -18,11 +18,13 @@ import astrowind from './vendor/integration';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter';
 import { buildInternalLinkIndex, internalLinkEmbedRehypePlugin } from './src/utils/linkEmbeds';
 import { generateOgCards } from './src/utils/ogCards';
+import { findStandaloneApps } from './src/utils/standaloneApps';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const internalLinkIndex = await buildInternalLinkIndex(__dirname);
 await generateOgCards(__dirname);
+const standaloneApps = findStandaloneApps(__dirname);
 
 const hasExternalScripts = true;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
@@ -32,7 +34,7 @@ export default defineConfig({
   output: 'static',
 
   integrations: [
-    sitemap(),
+    sitemap({ customPages: standaloneApps }),
     mdx(),
     icon({
       include: {

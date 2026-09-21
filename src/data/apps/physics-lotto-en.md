@@ -2,6 +2,8 @@
 title: Physics Lotto
 description: Physics Lotto is a 3D lottery number machine driven by real physics — air-mixed, drawn one ball at a time through the gate.
 iconImage: ~/assets/images/physics-lotto-icon.png
+liveUrl: /physics-lotto/
+appCategory: EntertainmentApplication
 showToc: true
 showComments: false
 lang: en

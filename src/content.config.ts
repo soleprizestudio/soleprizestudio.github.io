@@ -121,6 +121,13 @@ const appsCollection = defineCollection({
     description: z.string(),
     icon: z.string().optional(),
     iconImage: z.string().optional(),
+    // Where the app itself runs, for apps playable in the browser. Games carry
+    // the same thing as `playPath`; apps only set it when there is one.
+    liveUrl: z.string().optional(),
+    // schema.org applicationCategory. Most of these are tools; the ones that
+    // are really toys say so, so the structured data matches what the app
+    // itself claims.
+    appCategory: z.enum(['UtilitiesApplication', 'EntertainmentApplication']).optional(),
     storeUrl: z.string().optional(),
     privacyUrl: z.string().optional(),
     draft: z.boolean().optional().default(false),
