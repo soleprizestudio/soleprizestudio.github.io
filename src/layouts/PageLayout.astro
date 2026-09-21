@@ -73,7 +73,7 @@ const footerSecondaryLinks = [
 
 <Layout metadata={metadata} locales={locales} jsonLd={jsonLd}>
   <slot name="header">
-    <Header {...headerData} links={headerLinks} isSticky showToggleTheme showLanguageSwitcher />
+    <Header {...headerData} links={headerLinks} locales={locales} isSticky showToggleTheme showLanguageSwitcher />
   </slot>
   <main>
     <slot />
