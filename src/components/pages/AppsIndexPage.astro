@@ -14,7 +14,11 @@ const metadata = { title: t('apps.title'), description: t('apps.subtitle') };
 ---
 
 <Layout metadata={metadata}>
-  <HeroText tagline="Apps" title={t('apps.title')} subtitle={t('apps.subtitle')} />
+  <HeroText tagline="Apps" title={t('apps.title')} subtitle={t('apps.subtitle')}>
+    <Fragment slot="content">
+      <p class="text-muted max-w-2xl mx-auto">{t('apps.intro')}</p>
+    </Fragment>
+  </HeroText>
 
   {apps.length === 0 && <p class="text-muted text-center pb-16">{t('apps.empty')}</p>}
 

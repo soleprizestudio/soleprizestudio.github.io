@@ -72,13 +72,17 @@ const ui = {
 
     'games.title': '게임',
     'games.subtitle': '브라우저에서 바로 즐길 수 있는 게임',
+    'games.intro':
+      '설치도 가입도 없습니다. 주소만 열면 그 자리에서 돌아갑니다. 필요한 순간에 바로 써야 하는 것들이라 앱 대신 웹으로 만들었습니다.',
     'games.empty': '아직 등록된 게임이 없어요 — 곧 올라올 예정입니다!',
     'games.openInNewTab': '새 탭에서 크게 보기',
     'games.thumbnailAlt': '썸네일',
     'games.viewDetail': '자세히 보기',
 
     'apps.title': '앱',
-    'apps.subtitle': 'SolePrize Studio가 만드는 앱을 소개합니다.',
+    'apps.subtitle': '스토어에 올린 앱과 브라우저에서 도는 앱',
+    'apps.intro':
+      '쓸 일이 있어서 만들었고 쓸 만해서 올려뒀습니다. 하나는 앱 스토어에서 받아 쓰고, 하나는 주소만 열면 바로 돌아갑니다.',
     'apps.empty': '아직 등록된 앱이 없어요 — 곧 올라올 예정입니다!',
     'apps.viewDetail': '자세히 보기',
     'apps.iconAlt': '아이콘',
@@ -139,13 +143,17 @@ const ui = {
 
     'games.title': 'Games',
     'games.subtitle': 'Games you can play right in the browser',
+    'games.intro':
+      'Nothing to install, no account to make. Open the address and it runs. These are things you need the moment you need them, so they are web pages rather than apps.',
     'games.empty': 'No games here yet — something is on the way!',
     'games.openInNewTab': 'Open in a new tab',
     'games.thumbnailAlt': 'thumbnail',
     'games.viewDetail': 'View details',
 
     'apps.title': 'Apps',
-    'apps.subtitle': 'Apps made by SolePrize Studio.',
+    'apps.subtitle': 'Apps on the store, and apps that run in your browser',
+    'apps.intro':
+      'Built because I needed them, put up because they turned out useful. One you download from the App Store; the other runs as soon as you open the address.',
     'apps.empty': 'No apps here yet — something is on the way!',
     'apps.viewDetail': 'View details',
     'apps.iconAlt': 'icon',
