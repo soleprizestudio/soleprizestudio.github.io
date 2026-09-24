@@ -1,3 +1,5 @@
+import { SITE } from 'astrowind:config';
+
 export const DEFAULT_LOCALE = 'ko' as const;
 export const LOCALES = ['ko', 'en'] as const;
 
@@ -25,11 +27,15 @@ export function getLocaleFromUrl(url: URL): Locale {
 /**
  * Prefixes a site-root-relative path with the locale.
  * The default locale stays unprefixed so existing Korean URLs never move.
+ *
+ * The result carries a trailing slash when the site is configured for one, so
+ * nav links, the language switcher and hreflang all name the URL the host
+ * actually serves rather than the one it redirects away from.
  */
 export function localePath(path: string, locale: Locale): string {
   const clean = `/${path.replace(/^\/+/, '')}`.replace(/\/$/, '') || '/';
-  if (locale === DEFAULT_LOCALE) return clean;
-  return clean === '/' ? `/${locale}` : `/${locale}${clean}`;
+  const prefixed = locale === DEFAULT_LOCALE ? clean : clean === '/' ? `/${locale}` : `/${locale}${clean}`;
+  return SITE.trailingSlash && prefixed !== '/' ? `${prefixed}/` : prefixed;
 }
 
 /** Strips the locale prefix, giving the shared path used to pair translations for hreflang. */

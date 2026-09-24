@@ -19,12 +19,14 @@ import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/uti
 import { buildInternalLinkIndex, internalLinkEmbedRehypePlugin } from './src/utils/linkEmbeds';
 import { generateOgCards } from './src/utils/ogCards';
 import { findStandaloneApps } from './src/utils/standaloneApps';
+import { buildLastmodIndex, lastmodFor } from './src/utils/lastmod';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const internalLinkIndex = await buildInternalLinkIndex(__dirname);
 await generateOgCards(__dirname);
 const standaloneApps = findStandaloneApps(__dirname);
+const lastmodIndex = buildLastmodIndex(__dirname);
 
 const hasExternalScripts = true;
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
@@ -34,7 +36,16 @@ export default defineConfig({
   output: 'static',
 
   integrations: [
-    sitemap({ customPages: standaloneApps }),
+    sitemap({
+      customPages: standaloneApps,
+      // Dates come from frontmatter or the file's last commit; a URL we can't
+      // date is emitted without the field rather than stamped with today,
+      // since a lastmod Google catches lying is worse than none at all.
+      serialize: (item) => {
+        const lastmod = lastmodFor(lastmodIndex, item.url);
+        return lastmod ? { ...item, lastmod } : item;
+      },
+    }),
     mdx(),
     icon({
       include: {

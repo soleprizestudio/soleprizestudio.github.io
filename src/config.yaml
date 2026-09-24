@@ -2,7 +2,11 @@ site:
   name: SolePrize Studio
   site: 'https://soleprizestudio.github.io'
   base: '/'
-  trailingSlash: false
+  # GitHub Pages serves every page as a directory index and 301s the
+  # slash-less form onto it, so the canonical URLs, the sitemap and our own
+  # links all have to carry the slash - otherwise we hand Google a sitemap
+  # full of redirects whose destinations point back at the redirecting URL.
+  trailingSlash: true
 
 # Default SEO metadata
 metadata:
