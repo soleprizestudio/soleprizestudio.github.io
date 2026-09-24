@@ -13,13 +13,36 @@ import path from 'node:path';
  * anything we can't date is simply left out rather than stamped with today.
  */
 
+let shallow = false;
+
 const isoDay = (value: string | Date): string | undefined => {
   const date = value instanceof Date ? value : new Date(value);
   return Number.isNaN(date.getTime()) ? undefined : date.toISOString().slice(0, 10);
 };
 
+/**
+ * A shallow checkout holds one commit, so `git log -1 -- <path>` answers with
+ * that commit for every file and every page looks like it changed today. CI
+ * clones with full history for this reason; if that ever regresses we drop
+ * commit dates entirely rather than publish a sitemap full of false ones.
+ */
+function isShallowClone(rootDir: string): boolean {
+  try {
+    return (
+      execFileSync('git', ['rev-parse', '--is-shallow-repository'], {
+        cwd: rootDir,
+        encoding: 'utf-8',
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }).trim() === 'true'
+    );
+  } catch {
+    return false;
+  }
+}
+
 /** Last commit that touched a file, or undefined outside a usable checkout. */
 function lastCommitDate(rootDir: string, relPath: string): string | undefined {
+  if (shallow) return undefined;
   try {
     const out = execFileSync('git', ['log', '-1', '--format=%cI', '--', relPath], {
       cwd: rootDir,
@@ -48,6 +71,10 @@ const field = (fm: string, name: string) =>
  */
 export function buildLastmodIndex(rootDir: string): Record<string, string> {
   const index: Record<string, string> = {};
+  shallow = isShallowClone(rootDir);
+  if (shallow) {
+    console.warn('[lastmod] shallow git clone - dating pages from frontmatter only, commit dates skipped');
+  }
 
   const collections: Array<{ dir: string; urlFor: (key: string) => string[] }> = [
     { dir: 'src/data/posts', urlFor: (key) => [`/posts/${key}`] },
