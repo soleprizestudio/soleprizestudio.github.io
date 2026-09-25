@@ -105,7 +105,9 @@ const ui = {
     'contact.email': '이메일',
     'contact.message': '메시지',
     'contact.disclaimer': '문의 폼을 제출하면 입력하신 개인정보 수집에 동의하게 됩니다.',
-    'contact.sent': '문의가 정상적으로 접수되었습니다. 빠른 시일 내에 답변드릴게요!',
+    'contact.sent': '문의가 접수되었습니다. 확인하는 대로 답장드리겠습니다.',
+    'contact.intro': '이런 연락을 기다립니다.',
+    'contact.replyNote': '혼자 주말에 작업하고 있어서 답장이 늦을 수 있습니다. 확인하는 대로 답장드리겠습니다.',
     'contact.subject': 'SolePrize Studio 웹사이트 문의',
 
     'notFound.title': '페이지를 찾을 수 없어요',
@@ -176,7 +178,10 @@ const ui = {
     'contact.email': 'Email',
     'contact.message': 'Message',
     'contact.disclaimer': 'By submitting this form you consent to the collection of the details you entered.',
-    'contact.sent': "Your message was sent. I'll get back to you soon!",
+    'contact.sent': "Your message was sent. I'll reply once I've read it.",
+    'contact.intro': "Here's what I'd love to hear about:",
+    'contact.replyNote':
+      "I work on this alone, on weekends, so replies can take a while. I'll answer once I've read your message.",
     'contact.subject': 'SolePrize Studio website enquiry',
 
     'notFound.title': 'Page not found',

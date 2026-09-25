@@ -32,7 +32,12 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
           site: SITE.site,
           base: SITE.base,
 
-          trailingSlash: SITE.trailingSlash ? 'always' : 'never',
+          // Our own URLs (canonical, links, hreflang) take their slash from
+          // SITE.trailingSlash via permalinks/localePath. Astro's routing is
+          // left lenient: 'always' also makes the dev server 404 its own
+          // /_image endpoint, which has no slash, so every image breaks in
+          // `astro dev`. The static build is identical either way.
+          trailingSlash: SITE.trailingSlash ? 'ignore' : 'never',
 
           vite: {
             plugins: [

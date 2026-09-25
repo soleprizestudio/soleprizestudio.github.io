@@ -16,11 +16,36 @@ const WEB3FORMS_ACCESS_KEY = '4cf05ae7-d861-4a9a-8589-9ebf1f73a1bb';
 const contactPath = localePath('/contact', locale);
 const sent = Astro.url.searchParams.get('sent') === '1';
 
-const metadata = { title: t('contact.title') };
+const metadata = { title: t('contact.title'), description: t('contact.intro') };
+
+const topics =
+  locale === 'en'
+    ? [
+        'Bugs you ran into, or something you wish an app or game did',
+        "An app or game you'd like someone to make",
+        'Collaboration or partnership ideas',
+        'Advertising and promotion enquiries',
+      ]
+    : [
+        '앱·게임을 쓰다가 발견한 버그나 바라는 점',
+        '만들어줬으면 하는 앱이나 게임',
+        '협업이나 제휴 제안',
+        '광고·홍보 문의',
+      ];
 ---
 
 <Layout metadata={metadata}>
-  <HeroText tagline="Contact" title={t('contact.title')} />
+  <HeroText tagline="Contact" title={t('contact.title')}>
+    <Fragment slot="content">
+      <div class="max-w-xl mx-auto text-left text-muted">
+        <p class="mb-3">{t('contact.intro')}</p>
+        <ul class="list-disc pl-5 space-y-1 mb-4">
+          {topics.map((topic) => <li>{topic}</li>)}
+        </ul>
+        <p>{t('contact.replyNote')}</p>
+      </div>
+    </Fragment>
+  </HeroText>
 
   {
     sent && (
