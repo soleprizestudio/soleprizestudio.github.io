@@ -14,7 +14,6 @@ const t = useTranslations(locale);
 const WEB3FORMS_ACCESS_KEY = '4cf05ae7-d861-4a9a-8589-9ebf1f73a1bb';
 
 const contactPath = localePath('/contact', locale);
-const sent = Astro.url.searchParams.get('sent') === '1';
 
 const metadata = { title: t('contact.title'), description: t('contact.intro') };
 
@@ -47,15 +46,26 @@ const topics =
     </Fragment>
   </HeroText>
 
-  {
-    sent && (
-      <div class="max-w-xl mx-auto mb-6 px-4">
-        <div class="rounded-lg border border-green-300 bg-green-50 dark:bg-green-900/30 dark:border-green-700 text-green-800 dark:text-green-200 p-4 text-center">
-          {t('contact.sent')}
-        </div>
-      </div>
-    )
-  }
+  <div id="contact-sent" class="max-w-xl mx-auto mb-6 px-4" role="status" hidden>
+    <div
+      class="rounded-lg border border-green-300 bg-green-50 dark:bg-green-900/30 dark:border-green-700 text-green-800 dark:text-green-200 p-4 text-center"
+    >
+      {t('contact.sent')}
+    </div>
+  </div>
+  <script is:inline>
+    // Web3Forms sends the visitor back here with ?sent=1. The site is static,
+    // so the query string only exists in the browser - reading it at build
+    // time left this notice permanently hidden.
+    (function () {
+      const show = function () {
+        const el = document.getElementById('contact-sent');
+        if (el && new URLSearchParams(location.search).get('sent') === '1') el.hidden = false;
+      };
+      show();
+      document.addEventListener('astro:page-load', show);
+    })();
+  </script>
 
   <ContactUs
     id="form"
