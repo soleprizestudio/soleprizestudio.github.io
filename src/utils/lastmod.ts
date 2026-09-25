@@ -92,10 +92,14 @@ export function buildLastmodIndex(rootDir: string): Record<string, string> {
       const fm = frontmatterOf(path.join(abs, file));
       if (/^draft:\s*true/m.test(fm)) continue;
 
-      // updateDate beats publishDate; a commit date is the fallback for
-      // entries that carry no dates at all (apps and games don't).
-      const declared = field(fm, 'updateDate') || field(fm, 'publishDate');
-      const date = (declared && isoDay(declared)) || lastCommitDate(rootDir, rel);
+      // The later of the declared date and the file's last commit. updateDate
+      // is an editorial date shown to readers and rarely gets bumped for a
+      // retitle or a typo fix, but the page did change and a crawler should
+      // hear about it. Apps and games carry no dates, so only the commit counts.
+      const declaredRaw = field(fm, 'updateDate') || field(fm, 'publishDate');
+      const declared = declaredRaw ? isoDay(declaredRaw) : undefined;
+      const committed = lastCommitDate(rootDir, rel);
+      const date = [declared, committed].filter(Boolean).sort().pop();
       if (!date) continue;
 
       const key = field(fm, 'translationKey') || file.replace(/\.mdx?$/, '');
