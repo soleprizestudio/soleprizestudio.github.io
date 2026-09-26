@@ -20,7 +20,7 @@ Every number is the outcome of a **rigid-body physics simulation**, not a random
 
 ## Features
 
-- **45 games from 34 countries** — from Korea's Lotto 6/45 to US Powerball and Mega Millions, EuroMillions, and Japan's Loto 6/7. Games with a separate ball set (like Powerball) empty the drum through trapdoors and swap in the second set mid-draw.
+- **44 lottery games worldwide** — from Korea's Lotto 6/45 to US Powerball and Mega Millions, EuroMillions, and Japan's Loto 6/7. Games with a separate ball set (like Powerball) empty the drum through trapdoors and swap in the second set mid-draw.
 - **20 languages** — your browser language is detected automatically; country names and draw days are localized too.
 - **Draw history** — results stack up in a list you can save as a PNG image. On phones, the share sheet saves it straight to your photo library.
 - **Full camera control** — drag and zoom around the machine, and run draws at 1×/2×/3× speed.
